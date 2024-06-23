@@ -1,8 +1,12 @@
 import "./App.css"
+import { Button } from "./components/ui/button"
 
 const App = () => {
   return (
-    <div>App</div>
+    <div>
+      App
+      <Button variant={"secondary"}>Click me</Button>
+    </div>
   )
 }
 
