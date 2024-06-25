@@ -1,6 +1,11 @@
 // import { useNavigate } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import "../styles/gradientText.css";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdOutlineEmail } from "react-icons/md";
+import { IoLocationOutline } from "react-icons/io5";
+import { Button } from "@/components/ui/button";
+import Footer from "@/components/Footer";
 
 const Home = () => {
   // const navigate = useNavigate();
@@ -114,6 +119,8 @@ const Home = () => {
           />
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
