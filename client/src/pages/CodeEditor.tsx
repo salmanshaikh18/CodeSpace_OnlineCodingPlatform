@@ -8,7 +8,7 @@ import {
 
 const CodeEditor = () => {
   return (
-    <div className="text-red-500 h-[calc(100vh-60px)] w-full">
+    <div className="text-red-500 h-[calc(100vh-60px-50px)] w-full">
       <EditorHeader />
       <ResizablePanelGroup
         direction="vertical"
