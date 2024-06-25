@@ -1,10 +1,6 @@
 // import { useNavigate } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import "../styles/gradientText.css";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { MdOutlineEmail } from "react-icons/md";
-import { IoLocationOutline } from "react-icons/io5";
-import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
 
 const Home = () => {
@@ -29,7 +25,7 @@ const Home = () => {
           id="right"
           className="sm:w-[55%] w-full h-full flex flex-col px-1 justify-center items-center gap-1"
         >
-          <h1 className="sp text-5xl sm:text-[6.2vw] rounded-lg px-2 sm:px-0 font-bold sm:font-semibold">
+          <h1 className="sp text-[45px] sm:text-[6.2vw] rounded-lg px-2 sm:px-0 font-bold sm:font-semibold">
             The CodeSpace
           </h1>
           <div className="sp sm:text-[3.5vw] text-3xl h-10 sm:h-20 my-4 sm:my-4 sm:mt-10">
@@ -43,10 +39,10 @@ const Home = () => {
               delaySpeed={1000}
             />
           </div>
-          <h2 className="text-[#976CE5] sm:text-2xl text-xl font-semibold">
+          <h2 className="text-[#976CE5] sm:text-2xl text-lg font-semibold">
             A One Stop Solution For Developers
           </h2>
-          <p className="text-start p-4">
+          <p className="text-center p-6 text-[16px] sm:text-lg">
             The CodeSpace is a social development environment for front-end
             designers and developers. Build and deploy a website, show off your
             work, build test cases to learn and debug, and find inspiration.
@@ -59,7 +55,7 @@ const Home = () => {
           <h1 className="text-4xl border-t-2 pt-2 font-bold pb-2 text-center  transition all ease duration-150 border-b-2 text-[#03CF7E] border-zinc-600  cursor-pointer">
             Code Editor for HTML, CSS, and JS:
           </h1>
-          <h2 className="sm:text-xl text-md text-zinc-300">
+          <h2 className="sm:text-xl text-md text-zinc-300 text-center">
             Dive into the world of web development with our intuitive code
             editor. Write, debug, and run your HTML, CSS, and JavaScript code
             seamlessly, all in one place. Experience the joy of coding with a
@@ -91,7 +87,7 @@ const Home = () => {
           <h1 className="text-4xl border-t-2 pt-2 font-bold pb-2 text-center  transition all ease duration-150 border-b-2 text-[#03CF7E] border-zinc-600  cursor-pointer">
             Code Playground:
           </h1>
-          <h2 className="sm:text-xl text-md text-zinc-300">
+          <h2 className="sm:text-xl text-md text-zinc-300 text-center">
             Code Playground is a a space for users to practice coding constructs
             and logic in different languages without worrying about complex
             setups or dependencies. Designed for practicing core language
@@ -105,7 +101,7 @@ const Home = () => {
           <h1 className="text-4xl border-t-2 pt-2 font-bold pb-2 text-center  transition all ease duration-150 border-b-2 text-[#03CF7E] border-zinc-600  cursor-pointer">
             AI-Powered Assistant:
           </h1>
-          <h2 className="sm:text-xl text-md text-zinc-300">
+          <h2 className="sm:text-xl text-md text-zinc-300 text-center">
           Welcome to the future of productivity! Meet our AI-powered assistant, revolutionizing how you interact with your project. From answering queries to automating tasks, our assistant streamlines your workflow effortlessly. Experience the convenience of intelligent assistance right at your fingertips.
           </h2>
         </div>
