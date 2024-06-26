@@ -23,12 +23,11 @@ const Editor = () => {
     (state: RootState) => state.codeEditorSlice.fullCode
   );
 
-  // const [value, setValue] = React.useState("console.log('hello world!');");
   const onChange = React.useCallback((value: string) => {
     dispatch(updateCodeValue(value));
   }, []);
   return (
-    <div className="h-[calc(100vh-60px-50px)]">
+    <div className="h-full w-full">
       <ReactCodeMirror
         theme={draculaInit({
           settings: {
@@ -38,7 +37,7 @@ const Editor = () => {
           styles: [{ tag: t.comment, color: "#6272a4" }],
         })}
         value={fullCode[currentLanguage]}
-        className="h-[100vh]"
+        className="h-full w-full"
         height="100%"
         extensions={[loadLanguage(currentLanguage)!]}
         onChange={onChange}

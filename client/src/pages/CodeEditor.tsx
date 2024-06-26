@@ -1,4 +1,5 @@
 import { RootState } from "@/app/store";
+import CodePreview from "@/components/CodePreview";
 import Editor from "@/components/Editor";
 import EditorHeader from "@/components/EditorHeader";
 import {
@@ -22,9 +23,7 @@ const CodeEditor = () => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={25}>
-          <div className="flex h-full items-center justify-center p-6 bg-zinc-900">
-            <span className="font-semibold">Content</span>
-          </div>
+          <CodePreview />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>

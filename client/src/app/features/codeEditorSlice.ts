@@ -12,9 +12,58 @@ export interface CodeEditorSliceStateType {
 
 const initialState: CodeEditorSliceStateType = {
   fullCode: {
-    html: "html code",
-    css: "css code",
-    javascript: "js code",
+    html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Template</title>
+</head>
+<body>
+  <header>
+    <h1>Welcome to My Website</h1>
+  </header>
+  <div class="container">
+    <h2>About</h2>
+    <p>This is a basic HTML, CSS, and JavaScript template.</p>
+    <button onclick="showAlert()">Click Me</button>
+  </div>
+</body>
+</html>`,
+    css: `body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.container {
+  margin: 20px;
+}
+
+button {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #555;
+}`,
+    javascript: `// JavaScript code goes here
+function showAlert() {
+  alert('Button clicked!');
+}
+    `,
   },
   currentLanguage: "html",
 };
