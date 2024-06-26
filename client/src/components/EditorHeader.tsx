@@ -9,8 +9,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { IoLogoJavascript } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  CodeEditorSliceStateType,
+  updateCurrentLanguage,
+} from "@/app/features/codeEditorSlice";
+import { RootState } from "@/app/store";
 
 const EditorHeader = () => {
+  const dispatch = useDispatch();
+  const currentLanguage = useSelector(
+    (state: RootState) => state.codeEditorSlice.currentLanguage
+  );
   return (
     <div className="sm:h-[50px] h-[100px] flex-wrap sm:flex-nowrap bg-zinc-900 text-white flex justify-between px-4 items-center">
       <div className="flex gap-4">
@@ -27,14 +37,14 @@ const EditorHeader = () => {
       <div className="__tab_switcher flex justify-center items-center gap-1">
         <small className="text-[14px] text-zinc-400">Current Language: </small>
         <Select
-          defaultValue="html"
-        //   onValueChange={(value) =>
-        //     dispatch(
-        //       updateCurrentLanguage(
-        //         value as CompilerSliceStateType["currentLanguage"]
-        //       )
-        //     )
-        //   }
+          defaultValue={currentLanguage}
+          onValueChange={(value) =>
+            dispatch(
+              updateCurrentLanguage(
+                value as CodeEditorSliceStateType["currentLanguage"]
+              )
+            )
+          }
         >
           <SelectTrigger className="w-[130px] bg-gray-800 outline-none focus:ring-0">
             <SelectValue />
