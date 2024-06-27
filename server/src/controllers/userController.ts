@@ -93,19 +93,112 @@ export const register = async (req: Request, res: Response) => {
       sameSite: "lax",
     });
 
-    console.log("New User: ", newUser)
+    console.log("New User: ", newUser);
+    console.log("Existing user with username: ", existingUserWithUsername);
+    console.log("Existing user with email: ", existingUserWithEmail);
 
     // Send Successful Response
     return res.status(201).json({
-        username: newUser.username,
-        email: newUser.email,
-        password: newUser.password,
-        savedCodes: newUser.savedCodes,
-    })
+      message: "Registration successful! Welcome to CodeSpace. :)",
+      username: newUser.username,
+      email: newUser.email,
+      password: newUser.password,
+      savedCodes: newUser.savedCodes,
+    });
   } catch (error) {
     return res.status(500).json({
       message:
         "Oops! Something went wrong while register. Please try again later or contact support for assistance.!",
+      error: error,
+    });
+  }
+};
+
+export const login = async (req: Request, res: Response) => {
+  // userId, password: Destructure the request body to get the input data. userId can be either an email or a username.
+  const { userId, password }: { userId: string; password: string } = req.body;
+  try {
+    // Validate Input Fields
+    // Check if userId and password are provided. If not, send an appropriate error message.
+    if (!userId) {
+      return res.status(400).send({
+        message: "Please provide your username!",
+      });
+    }
+
+    if (!password) {
+      return res.status(400).send({
+        message: "Please provide your password",
+      });
+    }
+
+    // Find Existing User
+    let existingUser = undefined;
+    // Determine if userId is an email or a username by checking if it contains an "@" character.
+    if (userId.includes("@")) {
+      existingUser = await User.findOne({ email: userId });
+    } else {
+      existingUser = await User.findOne({ username: userId });
+    }
+
+    // Check if User not Exists
+    // If no user is found, send an error message.
+    if (!existingUser) {
+      return res.status(400).json({
+        message: "User not found!",
+      });
+    }
+
+    // Verify Password
+    // Use bcrypt to compare the provided password with the stored hashed password.
+    // If the passwords do not match, send an error message.
+    const passwordMatched = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+    if (!passwordMatched) {
+      return res.status(400).json({
+        message: "Incorrect password. Please try again.",
+      });
+    }
+
+    // Generate JWT Token
+    // Create a JWT token that includes the user's ID and email.
+    // Sign the token with a secret key (process.env.JWT_KEY) and set an expiration time of 1 day.
+    const jwtToken = jwt.sign(
+      {
+        _id: existingUser._id,
+        email: existingUser.email,
+      },
+      process.env.JWT_KEY!,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    // Set JWT Token as a Cookie
+    // Set the JWT token in a cookie to be sent with the response.
+    // The cookie is set to expire in 24 hours, is accessible only via HTTP (not JavaScript), and uses a lax same-site policy.
+    res.cookie("token", jwtToken, {
+      path: "/",
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      httpOnly: true,
+      sameSite: "lax",
+    });
+
+    // Send Successful Response
+    // Send a response with the existing user's information.
+    return res.status(200).send({
+        message: "Login successful! Welcome back.",
+        username: existingUser.username,
+        picture: existingUser.picture,
+        email: existingUser.email,
+        savedCodes: existingUser.savedCodes,
+      });
+  } catch (error) {
+    return res.status(500).send({
+      message:
+        "Oops! Something went wrong while login. Please try again later or contact support for assistance.!!",
       error: error,
     });
   }

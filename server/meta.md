@@ -960,3 +960,437 @@ In this example:
 ### Summary
 
 The line `export const userRouter = express.Router();` creates a new router object using Express, assigns it to the constant `userRouter`, and exports it for use in other parts of the application. This allows you to define and organize routes related to users in a modular and maintainable way.
+
+
+---
+
+## Register Controller
+
+Certainly! Let's break down this `signup` function in detail. This function is an Express.js route handler for user registration, written in TypeScript.
+
+### Overview
+
+The function handles user registration by:
+1. Validating the provided input (username, email, and password).
+2. Checking for existing users with the same username or email.
+3. Creating a new user with a hashed password.
+4. Generating a JWT token and setting it as a cookie.
+5. Sending a response with user details if successful, or an error message if something goes wrong.
+
+### Detailed Explanation
+
+```typescript
+export const signup = async (req: Request, res: Response) => {
+  const { username, email, password } = req.body;
+  const usernameRegex = /^[a-zA-Z0-9]+$/;
+  try {
+    if (
+      (!email && !username && !password) ||
+      (!email && !username) ||
+      (!email && !password) ||
+      (!username && !password)
+    ) {
+      return res.status(400).send({ message: "All fields are required!" });
+    } else {
+      if (!email) {
+        return res.status(400).send({ message: "Please provide your email!" });
+      } else if (!username) {
+        return res.status(400).send({ message: "Please provide your username!" });
+      } else if (!password) {
+        return res.status(400).send({ message: "Please provide your password!" });
+      }
+    }
+
+    const existingUserWithUsername = await User.findOne({ username: username });
+    if (existingUserWithUsername) {
+      return res.status(400).send({ message: "Username is already taken!" });
+    }
+
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) {
+      return res.status(400).send({ message: "User already exists!" });
+    }
+    if (!usernameRegex.test(username)) {
+      return res.status(400).send({ message: "Please provide a valid username!" });
+    }
+
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const user = await User.create({
+      email: email,
+      password: hashedPassword,
+      username: username,
+    });
+
+    const jwtToken = jwt.sign(
+      {
+        _id: user._id,
+        email: user.email,
+      },
+      process.env.JWT_KEY!,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    res.cookie("token", jwtToken, {
+      path: "/",
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      httpOnly: true,
+      sameSite: "lax",
+    });
+
+    return res.status(201).send({
+      username: user.username,
+      picture: user.picture,
+      email: user.email,
+      savedCodes: user.savedCodes,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: "Oops! Something went wrong while signing up. Please try again later or contact support for assistance.",
+      error: error,
+    });
+  }
+};
+```
+
+### Step-by-Step Breakdown
+
+1. **Import and Define Constants**:
+   ```typescript
+   export const signup = async (req: Request, res: Response) => {
+     const { username, email, password } = req.body;
+     const usernameRegex = /^[a-zA-Z0-9]+$/;
+   ```
+   - `req: Request, res: Response`: The request and response objects provided by Express.
+   - `username, email, password`: Destructure the request body to get the input data.
+   - `usernameRegex`: A regular expression to validate the username.
+
+2. **Validate Input Fields**:
+   ```typescript
+   if (
+     (!email && !username && !password) ||
+     (!email && !username) ||
+     (!email && !password) ||
+     (!username && !password)
+   ) {
+     return res.status(400).send({ message: "All fields are required!" });
+   } else {
+     if (!email) {
+       return res.status(400).send({ message: "Please provide your email!" });
+     } else if (!username) {
+       return res.status(400).send({ message: "Please provide your username!" });
+     } else if (!password) {
+       return res.status(400).send({ message: "Please provide your password!" });
+     }
+   }
+   ```
+   - Check if any of the fields are missing and send an appropriate error message if they are.
+
+3. **Check for Existing Username**:
+   ```typescript
+   const existingUserWithUsername = await User.findOne({ username: username });
+   if (existingUserWithUsername) {
+     return res.status(400).send({ message: "Username is already taken!" });
+   }
+   ```
+   - Query the database to see if the username already exists.
+   - If it does, send an error message.
+
+4. **Check for Existing Email**:
+   ```typescript
+   const existingUser = await User.findOne({ email: email });
+   if (existingUser) {
+     return res.status(400).send({ message: "User already exists!" });
+   }
+   ```
+   - Query the database to see if the email already exists.
+   - If it does, send an error message.
+
+5. **Validate Username Format**:
+   ```typescript
+   if (!usernameRegex.test(username)) {
+     return res.status(400).send({ message: "Please provide a valid username!" });
+   }
+   ```
+   - Use the regular expression to ensure the username contains only alphanumeric characters.
+   - If not, send an error message.
+
+6. **Hash the Password**:
+   ```typescript
+   const salt = await bcrypt.genSalt();
+   const hashedPassword = await bcrypt.hash(password, salt);
+   ```
+   - Generate a salt using bcrypt.
+   - Hash the password using the generated salt.
+
+7. **Create the User**:
+   ```typescript
+   const user = await User.create({
+     email: email,
+     password: hashedPassword,
+     username: username,
+   });
+   ```
+   - Create a new user in the database with the provided email, hashed password, and username.
+
+8. **Generate JWT Token**:
+   ```typescript
+   const jwtToken = jwt.sign(
+     {
+       _id: user._id,
+       email: user.email,
+     },
+     process.env.JWT_KEY!,
+     {
+       expiresIn: "1d",
+     }
+   );
+   ```
+   - Create a JWT token that includes the user's ID and email.
+   - Sign the token with a secret key (`process.env.JWT_KEY`) and set an expiration time of 1 day.
+
+9. **Set JWT Token as a Cookie**:
+   ```typescript
+   res.cookie("token", jwtToken, {
+     path: "/",
+     expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+     httpOnly: true,
+     sameSite: "lax",
+   });
+   ```
+   - Set the JWT token in a cookie to be sent with the response.
+   - The cookie is set to expire in 24 hours, is accessible only via HTTP (not JavaScript), and uses a lax same-site policy.
+
+10. **Send Successful Response**:
+    ```typescript
+    return res.status(201).send({
+      username: user.username,
+      picture: user.picture,
+      email: user.email,
+      savedCodes: user.savedCodes,
+    });
+    ```
+    - Send a response with the newly created user's information.
+
+11. **Error Handling**:
+    ```typescript
+    } catch (error) {
+      return res.status(500).send({
+        message: "Oops! Something went wrong while signing up. Please try again later or contact support for assistance.",
+        error: error,
+      });
+    }
+    ```
+    - Catch any errors that occur during the process and send a generic error message with a 500 status code.
+
+### Summary
+
+The `signup` function validates user input, checks for existing users, hashes the password, creates a new user, generates a JWT token, sets it as a cookie, and sends back the user's information. If any error occurs, it sends an appropriate error message. This ensures a secure and smooth signup process for new users.
+
+
+---
+
+## Login Conroller
+
+Sure! Let's break down the `login` function in detail. This function is an Express.js route handler for user login, written in TypeScript.
+
+### Overview
+
+The function handles user login by:
+1. Validating the provided input (userId and password).
+2. Checking if the user exists based on the provided userId (which can be either an email or a username).
+3. Verifying the password.
+4. Generating a JWT token if the login is successful.
+5. Setting the JWT token as a cookie.
+6. Sending a response with user details if successful, or an error message if something goes wrong.
+
+### Detailed Explanation
+
+```typescript
+export const login = async (req: Request, res: Response) => {
+  const { userId, password }: { userId: string; password: string } = req.body;
+  try {
+    if (!userId) {
+      return res.status(400).send({
+        message: "Please provide your username!",
+      });
+    }
+
+    if (!password) {
+      return res.status(400).send({
+        message: "Please provide your password",
+      });
+    }
+    let existingUser = undefined;
+
+    if (userId.includes("@")) {
+      existingUser = await User.findOne({ email: userId });
+    } else {
+      existingUser = await User.findOne({ username: userId });
+    }
+
+    if (!existingUser) {
+      return res.status(400).send({ message: "User not found" });
+    }
+
+    const passwordMatched = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!passwordMatched) {
+      return res.status(400).send({ message: "Wrong Password" });
+    }
+
+    const jwtToken = jwt.sign(
+      {
+        _id: existingUser._id,
+        email: existingUser.email,
+      },
+      process.env.JWT_KEY!,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    res.cookie("token", jwtToken, {
+      path: "/",
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      httpOnly: true,
+      sameSite: "lax",
+    });
+
+    return res.status(200).send({
+      username: existingUser.username,
+      picture: existingUser.picture,
+      email: existingUser.email,
+      savedCodes: existingUser.savedCodes,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message:
+        "Oops! Something went wrong while login. Please try again later or contact support for assistance.!!",
+      error: error,
+    });
+  }
+};
+```
+
+### Step-by-Step Breakdown
+
+1. **Import and Define Constants**:
+   ```typescript
+   export const login = async (req: Request, res: Response) => {
+     const { userId, password }: { userId: string; password: string } = req.body;
+   ```
+   - `req: Request, res: Response`: The request and response objects provided by Express.
+   - `userId, password`: Destructure the request body to get the input data. `userId` can be either an email or a username.
+
+2. **Validate Input Fields**:
+   ```typescript
+   try {
+     if (!userId) {
+       return res.status(400).send({
+         message: "Please provide your username!",
+       });
+     }
+
+     if (!password) {
+       return res.status(400).send({
+         message: "Please provide your password",
+       });
+     }
+   ```
+   - Check if `userId` and `password` are provided. If not, send an appropriate error message.
+
+3. **Find Existing User**:
+   ```typescript
+   let existingUser = undefined;
+
+   if (userId.includes("@")) {
+     existingUser = await User.findOne({ email: userId });
+   } else {
+     existingUser = await User.findOne({ username: userId });
+   }
+   ```
+   - Determine if `userId` is an email or a username by checking if it contains an "@" character.
+   - Query the database to find a user with the provided email or username.
+
+4. **Check if User Exists**:
+   ```typescript
+   if (!existingUser) {
+     return res.status(400).send({ message: "User not found" });
+   }
+   ```
+   - If no user is found, send an error message.
+
+5. **Verify Password**:
+   ```typescript
+   const passwordMatched = await bcrypt.compare(
+     password,
+     existingUser.password
+   );
+
+   if (!passwordMatched) {
+     return res.status(400).send({ message: "Wrong Password" });
+   }
+   ```
+   - Use bcrypt to compare the provided password with the stored hashed password.
+   - If the passwords do not match, send an error message.
+
+6. **Generate JWT Token**:
+   ```typescript
+   const jwtToken = jwt.sign(
+     {
+       _id: existingUser._id,
+       email: existingUser.email,
+     },
+     process.env.JWT_KEY!,
+     {
+       expiresIn: "1d",
+     }
+   );
+   ```
+   - Create a JWT token that includes the user's ID and email.
+   - Sign the token with a secret key (`process.env.JWT_KEY`) and set an expiration time of 1 day.
+
+7. **Set JWT Token as a Cookie**:
+   ```typescript
+   res.cookie("token", jwtToken, {
+     path: "/",
+     expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+     httpOnly: true,
+     sameSite: "lax",
+   });
+   ```
+   - Set the JWT token in a cookie to be sent with the response.
+   - The cookie is set to expire in 24 hours, is accessible only via HTTP (not JavaScript), and uses a lax same-site policy.
+
+8. **Send Successful Response**:
+    ```typescript
+    return res.status(200).send({
+      username: existingUser.username,
+      picture: existingUser.picture,
+      email: existingUser.email,
+      savedCodes: existingUser.savedCodes,
+    });
+    ```
+    - Send a response with the existing user's information.
+
+9. **Error Handling**:
+    ```typescript
+    } catch (error) {
+      return res.status(500).send({
+        message:
+          "Oops! Something went wrong while login. Please try again later or contact support for assistance.!!",
+        error: error,
+      });
+    }
+    ```
+    - Catch any errors that occur during the process and send a generic error message with a 500 status code.
+
+### Summary
+
+The `login` function validates the user input, checks for an existing user by email or username, verifies the password, generates a JWT token, sets it as a cookie, and sends back the user's information if successful. If any error occurs, it sends an appropriate error message. This ensures a secure and smooth login process for existing users.
