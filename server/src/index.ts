@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import cors from "cors";
 import { dbConnect } from "./lib/dbConnect";
 import { codeEditorRouter } from "./routes/codeEditorRouter";
+import { userRouter } from "./routes/userRouter";
 
 const app = express();
 config();
@@ -17,6 +18,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/code-editor", codeEditorRouter)
+app.use("/user", userRouter)
 
 // Database Connection
 dbConnect()
