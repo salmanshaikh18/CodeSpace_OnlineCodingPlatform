@@ -1,12 +1,3 @@
-import ReactCodeMirror from "@uiw/react-codemirror";
-// import { javascript } from "@codemirror/lang-javascript";
-import { tags as t } from "@lezer/highlight";
-import { draculaInit } from "@uiw/codemirror-theme-dracula";
-import {
-  loadLanguage,
-  // langNames,
-  // langs,
-} from "@uiw/codemirror-extensions-langs";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
@@ -46,16 +37,21 @@ const MonacoEditor = () => {
       <Editor
         options={{
           minimap: {
-            enabled: false,
+            enabled: true,
           },
-          // fontSize: 16,
+          fontSize: 14,
           wordWrap: "on",
         }}
         theme="vs-dark"
         language={currentLanguage}
-        className="code-editor outline-none text-sm sm:text-[18px] focus:ring-0 border-none "
-        value={fullCode[currentLanguage]}
-        onChange={() => onChange}
+        className="code-editor outline-none text-sm focus:ring-0 border-none "
+        value={fullCode[currentLanguage] ?? ""}
+        // onChange={onChange}
+        onChange={(value) => {
+          if (typeof value === "string") {
+            onChange(value);
+          }
+        }}
       />
     </div>
   );
