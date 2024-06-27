@@ -29,7 +29,7 @@ const EditorHeader = () => {
   const handleSaveCode = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/code-editor/save",
+        `${import.meta.env.VITE_BACKEND_URI}/code-editor/save`,
         {
           fullCode: fullCode,
         }

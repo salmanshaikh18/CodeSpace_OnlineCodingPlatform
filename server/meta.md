@@ -544,3 +544,17 @@ src/
 ### Summary
 
 In backend development, the `lib` folder serves as a repository for utility functions, helper modules, and custom libraries that enhance the functionality and maintainability of your application. It's a common practice to organize reusable and auxiliary code in this way to maintain a structured and modular codebase.
+
+
+---
+
+
+## Different between URL and URI
+
+Here's a simple difference between URL and URI:
+
+- **URL (Uniform Resource Locator)**: It tells you where something is located and how to access it. For example, `http://www.example.com/page` specifies the protocol (`http`), domain (`www.example.com`), and path (`/page`) to find a web page.
+
+- **URI (Uniform Resource Identifier)**: It identifies something with a unique name or address, whether you can access it or not. It's a broader term that includes URLs. For example, `mailto:info@example.com` identifies an email address but doesn't specify how to access it directly.
+
+In essence, URLs are a type of URI that specifically includes information about how to access a resource on the web.
