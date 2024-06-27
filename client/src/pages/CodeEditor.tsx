@@ -1,6 +1,6 @@
 import { updateFullCode } from "@/app/features/codeEditorSlice";
 import CodePreview from "@/components/CodePreview";
-import Editor from "@/components/Editor";
+// import Editor from "@/components/MonacoEditor";
 import EditorHeader from "@/components/EditorHeader";
 import {
   ResizableHandle,
@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import MonacoEditor from "@/components/MonacoEditor";
 
 const CodeEditor = () => {
   const { urlId } = useParams();
@@ -47,7 +48,7 @@ const CodeEditor = () => {
         className="min-h-[full] max-w-full border"
       >
         <ResizablePanel defaultSize={75}>
-          <Editor />
+          <MonacoEditor />
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={25}>
