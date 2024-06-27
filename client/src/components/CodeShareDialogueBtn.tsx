@@ -1,5 +1,5 @@
-import { CopyIcon } from "@radix-ui/react-icons"
-import { Button } from "@/components/ui/button"
+import { CopyIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -9,27 +9,39 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { FaShare } from "react-icons/fa"
-import { toast } from "react-toastify"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { FaShare } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export function DialogCloseButton() {
-    const handleCopy = () => {
-        window.navigator.clipboard.writeText(window.location.href)
-        toast.success("URL copid to your clipboard :)", {
-            
-        })
+  const [shareButton, setShareButton] = useState<boolean>(false);
+  const { urlId } = useParams();
+
+  useEffect(() => {
+    if (urlId) {
+      setShareButton(true);
+    } else {
+      setShareButton(false);
     }
+  }, [urlId]);
+  const handleCopy = () => {
+    window.navigator.clipboard.writeText(window.location.href);
+    toast.success("URL copid to your clipboard :)", {});
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
         {/* <Button variant="outline">Share</Button> */}
-        <button className="px-4 py-1 flex justify-center items-center gap-2 bg-blue-800 rounded-md hover:bg-blue-900 transition-all ease-in-out duration-300 hover:scale-105">
-          <FaShare />
-          Share
-        </button>
+        {shareButton ? (
+          <button className="px-4 py-1 flex justify-center items-center gap-2 bg-blue-800 rounded-md hover:bg-blue-900 transition-all ease-in-out duration-300 hover:scale-105">
+            <FaShare />
+            Share
+          </button>
+        ) : null}
       </DialogTrigger>
       <DialogContent className="sm:max-w-md w-[90vw]">
         <DialogHeader>
@@ -43,13 +55,14 @@ export function DialogCloseButton() {
             <Label htmlFor="link" className="sr-only">
               Link
             </Label>
-            <Input
-              id="link"
-                defaultValue={window.location.href}
-              readOnly
-            />
+            <Input id="link" defaultValue={window.location.href} readOnly />
           </div>
-          <Button onClick={handleCopy} type="submit" size="sm" className="px-3 hover:bg-green-400 transition-all ease-in-out duration-300">
+          <Button
+            onClick={handleCopy}
+            type="submit"
+            size="sm"
+            className="px-3 hover:bg-green-400 transition-all ease-in-out duration-300"
+          >
             <span className="sr-only">Copy</span>
             <CopyIcon className="h-4 w-4" />
           </Button>
@@ -63,5 +76,5 @@ export function DialogCloseButton() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
