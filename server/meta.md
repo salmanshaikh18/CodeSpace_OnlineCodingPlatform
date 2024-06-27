@@ -1394,3 +1394,91 @@ export const login = async (req: Request, res: Response) => {
 ### Summary
 
 The `login` function validates the user input, checks for an existing user by email or username, verifies the password, generates a JWT token, sets it as a cookie, and sends back the user's information if successful. If any error occurs, it sends an appropriate error message. This ensures a secure and smooth login process for existing users.
+
+
+---
+
+## Logout Controller
+
+Certainly! Let's break down the `logout` controller function in detail. This function is designed to handle the logout process in an Express.js application.
+
+### Overview
+
+The `logout` function:
+1. Clears the JWT token cookie stored in the client's browser.
+2. Sends a success message upon successful logout.
+3. Handles any errors that may occur during the logout process.
+
+### Detailed Explanation
+
+Here's the code for the `logout` controller function:
+
+```javascript
+export const logout = async (req, res) => {
+  try {
+    // Clear the "token" cookie
+    res.clearCookie("token");
+
+    // Send a success response
+    return res.status(200).send({ message: "Logged out successfully!" });
+  } catch (error) {
+    // Handle errors
+    return res.status(500).send({
+      message: "Oops! Something went wrong while logging out. Please try again later or contact support for assistance.",
+      error: error.message, // Include the error message for debugging purposes
+    });
+  }
+};
+```
+
+### Step-by-Step Breakdown
+
+1. **Clear Cookie**: 
+   ```javascript
+   res.clearCookie("token");
+   ```
+   - This line uses `res.clearCookie("token")` to remove the "token" cookie from the client's browser. This effectively logs the user out by removing their authentication token.
+
+2. **Send Success Message**:
+   ```javascript
+   return res.status(200).send({ message: "Logged out successfully!" });
+   ```
+   - After clearing the cookie successfully, the function sends a response with a status code of `200` indicating success, along with a message confirming that the logout was successful.
+
+3. **Error Handling**:
+   ```javascript
+   } catch (error) {
+     return res.status(500).send({
+       message: "Oops! Something went wrong while logging out. Please try again later or contact support for assistance.",
+       error: error.message, // Include the error message for debugging purposes
+     });
+   }
+   ```
+   - If an error occurs during the cookie clearing process (for example, if the server fails to clear the cookie due to some internal issue), the `catch` block catches the error.
+   - It sends a response with a status code of `500` (Internal Server Error) and an error message detailing what went wrong.
+   - The `error.message` is included for debugging purposes to provide more information about the error that occurred.
+
+### Usage
+
+You would typically use this `logout` controller function in your Express.js application to handle the logout functionality. For example, you might define a route in your Express routes like this:
+
+```javascript
+const express = require('express');
+const router = express.Router();
+
+const { logout } = require('../controllers/authController');
+
+// Logout route
+router.get('/logout', logout);
+
+module.exports = router;
+```
+
+In this example:
+- When a `GET` request is made to `/logout`, the `logout` controller function will be called.
+- It clears the "token" cookie and sends a success message upon successful logout.
+- If an error occurs, it handles it gracefully and sends an appropriate error response.
+
+### Summary
+
+The `logout` controller function in an Express.js application is responsible for clearing the authentication token cookie from the client's browser upon logout. It provides feedback to the user about the success or failure of the logout operation and ensures that any errors during the process are properly handled and communicated. This helps maintain the security and integrity of user sessions in your application.

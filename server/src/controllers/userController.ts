@@ -7,7 +7,7 @@ export const register = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
   const usernameRegex = /^[a-zA-Z0-9]+$/;
   try {
-    // Validate input fields
+    // 1. Validate input fields
     if (
       (!email && !username && !password) ||
       (!email && !username) ||
@@ -33,7 +33,7 @@ export const register = async (req: Request, res: Response) => {
       }
     }
 
-    // Check for Existing Username
+    // 2. Check for Existing Username
     const existingUserWithUsername = await User.findOne({ username: username });
     if (existingUserWithUsername) {
       return res.status(400).json({
@@ -42,7 +42,7 @@ export const register = async (req: Request, res: Response) => {
       });
     }
 
-    // Check for Existing Email
+    // 3. Check for Existing Email
     const existingUserWithEmail = await User.findOne({ email: email });
     if (existingUserWithEmail) {
       return res.status(400).json({
@@ -50,27 +50,25 @@ export const register = async (req: Request, res: Response) => {
       });
     }
 
-    // Validate Username Format
+    // 4. Validate Username Format
     if (!usernameRegex.test(username)) {
       return res.status(400).json({
         message: "Please provide the valid username",
       });
     }
 
-    // Hash the Password
+    // 5. Hash the Password
     const salt = await bcrypt.genSalt(); // Generate a salt using bcrypt.
     const hashedPassword = await bcrypt.hash(password, salt); // Hash the password using the generated salt.
 
-    // Creating the User
-    // Create a new user in the database with the provided email, hashed password, and username.
+    // 6. Create a new user in the database with the provided email, hashed password, and username.
     const newUser = await User.create({
       username: username,
       email: email,
       password: hashedPassword,
     });
 
-    // Generate JWT Token
-    // Create a JWT token that includes the user's ID and email.
+    // 7. Create a JWT token that includes the user's ID and email.
     // Sign the token with a secret key (process.env.JWT_KEY) and set an expiration time of 1 day.
     const jwtToken = jwt.sign(
       {
@@ -83,8 +81,7 @@ export const register = async (req: Request, res: Response) => {
       }
     );
 
-    // Set JWT Token as a Cookie
-    // Set the JWT token in a cookie to be sent with the response.
+    // 8. Set the JWT token in a cookie to be sent with the response.
     // The cookie is set to expire in 24 hours, is accessible only via HTTP (not JavaScript), and uses a lax same-site policy.
     res.cookie("token", jwtToken, {
       path: "/",
@@ -97,7 +94,7 @@ export const register = async (req: Request, res: Response) => {
     console.log("Existing user with username: ", existingUserWithUsername);
     console.log("Existing user with email: ", existingUserWithEmail);
 
-    // Send Successful Response
+    // 9. Send Successful Response
     return res.status(201).json({
       message: "Registration successful! Welcome to CodeSpace. :)",
       username: newUser.username,
@@ -118,7 +115,7 @@ export const login = async (req: Request, res: Response) => {
   // userId, password: Destructure the request body to get the input data. userId can be either an email or a username.
   const { userId, password }: { userId: string; password: string } = req.body;
   try {
-    // Validate Input Fields
+    // 1. Validate Input Fields
     // Check if userId and password are provided. If not, send an appropriate error message.
     if (!userId) {
       return res.status(400).send({
@@ -132,7 +129,7 @@ export const login = async (req: Request, res: Response) => {
       });
     }
 
-    // Find Existing User
+    // 2. Find Existing User
     let existingUser = undefined;
     // Determine if userId is an email or a username by checking if it contains an "@" character.
     if (userId.includes("@")) {
@@ -141,7 +138,7 @@ export const login = async (req: Request, res: Response) => {
       existingUser = await User.findOne({ username: userId });
     }
 
-    // Check if User not Exists
+    // 3. Check if User not Exists
     // If no user is found, send an error message.
     if (!existingUser) {
       return res.status(400).json({
@@ -149,7 +146,7 @@ export const login = async (req: Request, res: Response) => {
       });
     }
 
-    // Verify Password
+    // 4. Verify Password
     // Use bcrypt to compare the provided password with the stored hashed password.
     // If the passwords do not match, send an error message.
     const passwordMatched = await bcrypt.compare(
@@ -162,7 +159,7 @@ export const login = async (req: Request, res: Response) => {
       });
     }
 
-    // Generate JWT Token
+    // 5. Generate JWT Token
     // Create a JWT token that includes the user's ID and email.
     // Sign the token with a secret key (process.env.JWT_KEY) and set an expiration time of 1 day.
     const jwtToken = jwt.sign(
@@ -176,8 +173,7 @@ export const login = async (req: Request, res: Response) => {
       }
     );
 
-    // Set JWT Token as a Cookie
-    // Set the JWT token in a cookie to be sent with the response.
+    // 6. Set the JWT token in a cookie to be sent with the response.
     // The cookie is set to expire in 24 hours, is accessible only via HTTP (not JavaScript), and uses a lax same-site policy.
     res.cookie("token", jwtToken, {
       path: "/",
@@ -186,20 +182,36 @@ export const login = async (req: Request, res: Response) => {
       sameSite: "lax",
     });
 
-    // Send Successful Response
+    // 7. Send Successful Response
     // Send a response with the existing user's information.
     return res.status(200).send({
-        message: "Login successful! Welcome back.",
-        username: existingUser.username,
-        picture: existingUser.picture,
-        email: existingUser.email,
-        savedCodes: existingUser.savedCodes,
-      });
+      message: "Login successful! Welcome back.",
+      username: existingUser.username,
+      picture: existingUser.picture,
+      email: existingUser.email,
+      savedCodes: existingUser.savedCodes,
+    });
   } catch (error) {
     return res.status(500).send({
       message:
         "Oops! Something went wrong while login. Please try again later or contact support for assistance.!!",
       error: error,
+    });
+  }
+};
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    // Clear Cookie:
+    res.clearCookie("token")
+    return res.status(200).json({
+        message: "You have been logged out successfully. See you next time!"
+    })
+  } catch (error) {
+    return res.status(500).send({
+      message:
+        "Oops! Something went wrong while logging out. Please try again later or contact support for assistance.!",
+      error,
     });
   }
 };
