@@ -1,10 +1,8 @@
-// import { useNavigate } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import "../styles/gradientText.css";
 import Footer from "@/components/Footer";
 
 const Home = () => {
-  // const navigate = useNavigate();
   return (
     <div className="w-full bg-[#0E1630]">
       <div
@@ -52,8 +50,8 @@ const Home = () => {
 
       <div className="flex flex-col md:flex-row justify-between items-center pb-20 pt-10 md:pt-0 md:pb-0 border-b-2 border-zinc-700">
         <div className="md:w-1/2 p-6 md:p-20 gap-6 flex flex-col">
-          <h1 className="text-4xl border-t-2 pt-2 font-bold pb-2 text-center  transition all ease duration-150 border-b-2 text-[#03CF7E] border-zinc-600  cursor-pointer">
-            Code Editor for HTML, CSS, and JS:
+          <h1 className="text-xl sm:ext-4xl border-t-2 pt-2 font-bold pb-2 text-center  transition all ease duration-150 border-b-2 text-[#03CF7E] border-zinc-600  cursor-pointer">
+            Code Editor for HTML, CSS, and JavaScript:
           </h1>
           <h2 className="sm:text-xl text-md text-zinc-300 text-center">
             Dive into the world of web development with our intuitive code
@@ -65,9 +63,7 @@ const Home = () => {
         <div className="md:w-1/2 flex justify-center items-center">
           <img
             className="md:h-[240px] md:w-[340px] w-[280px] h-[200px] transition-all ease-in-out duration-700 hover:shadow-[0_0_15px_gray] shadow-[0_0_15px_white] bg-center object-center rounded-lg"
-            // src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExczZlOWw2aGpncnpuZHNseHd4cm93dHBleGI3cWdtd2xzd3ZsYTlsdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cB4TGncE6f6QZR1cxu/giphy.gif"
             src="https://media.giphy.com/media/3NE7JhJgZBHlMfmNEa/giphy.gif"
-            // src={codeEditorImg}
             alt=""
           />
         </div>
@@ -77,14 +73,12 @@ const Home = () => {
         <div className="md:w-1/2 flex justify-center items-center">
           <img
             className="md:h-[240px] md:w-[340px] w-[280px] h-[200px] transition-all ease-in-out duration-700 hover:shadow-[0_0_15px_gray] shadow-[0_0_15px_white] bg-center object-center rounded-lg"
-            // src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExczZlOWw2aGpncnpuZHNseHd4cm93dHBleGI3cWdtd2xzd3ZsYTlsdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cB4TGncE6f6QZR1cxu/giphy.gif"
             src="https://media.tenor.com/whgQwNlVvNkAAAAi/xero-code.gif"
-            // src={codeEditorImg}
             alt=""
           />
         </div>
         <div className="md:w-1/2 p-6 md:p-20 gap-6 flex flex-col">
-          <h1 className="text-4xl border-t-2 pt-2 font-bold pb-2 text-center  transition all ease duration-150 border-b-2 text-[#03CF7E] border-zinc-600  cursor-pointer">
+          <h1 className="text-xl sm:text-4xl border-t-2 pt-2 font-bold pb-2 text-center  transition all ease duration-150 border-b-2 text-[#03CF7E] border-zinc-600  cursor-pointer">
             Code Playground:
           </h1>
           <h2 className="sm:text-xl text-md text-zinc-300 text-center">
@@ -98,19 +92,21 @@ const Home = () => {
 
       <div className="flex flex-col md:flex-row justify-between items-center pb-20 pt-10 md:pt-0 md:pb-0 border-b-2 border-zinc-700">
         <div className="md:w-1/2 p-6 md:p-20 gap-6 flex flex-col">
-          <h1 className="text-4xl border-t-2 pt-2 font-bold pb-2 text-center  transition all ease duration-150 border-b-2 text-[#03CF7E] border-zinc-600  cursor-pointer">
-            AI-Powered Assistant:
+          <h1 className="text-xl sm:text-4xl border-t-2 pt-2 font-bold pb-2 text-center  transition all ease duration-150 border-b-2 text-[#03CF7E] border-zinc-600  cursor-pointer">
+            Ai-Powered Assistant:
           </h1>
           <h2 className="sm:text-xl text-md text-zinc-300 text-center">
-          Welcome to the future of productivity! Meet our AI-powered assistant, revolutionizing how you interact with your project. From answering queries to automating tasks, our assistant streamlines your workflow effortlessly. Experience the convenience of intelligent assistance right at your fingertips.
+            Welcome to the future of productivity! Meet our AI-powered
+            assistant, revolutionizing how you interact with your project. From
+            answering queries to automating tasks, our assistant streamlines
+            your workflow effortlessly. Experience the convenience of
+            intelligent assistance right at your fingertips.
           </h2>
         </div>
         <div className="md:w-1/2 flex justify-center items-center">
           <img
             className="md:h-[240px] md:w-[340px] w-[280px] h-[200px] transition-all ease-in-out duration-700 hover:shadow-[0_0_15px_gray] shadow-[0_0_15px_white] bg-center object-center rounded-lg"
-            // src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExczZlOWw2aGpncnpuZHNseHd4cm93dHBleGI3cWdtd2xzd3ZsYTlsdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cB4TGncE6f6QZR1cxu/giphy.gif"
             src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExczZlOWw2aGpncnpuZHNseHd4cm93dHBleGI3cWdtd2xzd3ZsYTlsdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cB4TGncE6f6QZR1cxu/giphy.gif"
-            // src={codeEditorImg}
             alt=""
           />
         </div>

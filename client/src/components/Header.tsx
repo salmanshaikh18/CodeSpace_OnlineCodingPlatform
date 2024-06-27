@@ -56,9 +56,6 @@ const Header = () => {
         </li>
       </ul>
       <div className="only-on-phone sm:hidden gap-2 flex justify-center items-center text-3xl ">
-        {/* {showMenus ? (
-          <div className="z-10 h-full w-full opacity-55 fixed top-0 right-0 bg-blue-700"></div>
-        ) : null} */}
         {!showMenus ? (
           <IoMenu
             className="z-20 cursor-pointer"
