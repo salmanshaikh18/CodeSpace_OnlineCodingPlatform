@@ -20,6 +20,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { RiLoader4Line } from "react-icons/ri";
+import { DialogCloseButton } from "./CodeShareDialogueBtn";
 
 const EditorHeader = () => {
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
@@ -69,10 +70,11 @@ const EditorHeader = () => {
             </>
           )}
         </button>
-        <button className="px-4 py-1 flex justify-center items-center gap-2 bg-green-600 rounded-md hover:bg-green-700 transition-all ease-in-out duration-300 hover:scale-105">
+        {/* <button className="px-4 py-1 flex justify-center items-center gap-2 bg-green-600 rounded-md hover:bg-green-700 transition-all ease-in-out duration-300 hover:scale-105">
           <FaShare />
           Share
-        </button>
+        </button> */}
+        <DialogCloseButton />
       </div>
 
       <div className="__tab_switcher flex justify-center items-center gap-1">
