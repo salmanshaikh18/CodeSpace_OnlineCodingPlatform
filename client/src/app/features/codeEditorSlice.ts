@@ -81,10 +81,16 @@ export const codeEditorSlice = createSlice({
     updateCodeValue: (state, action: PayloadAction<string>) => {
       state.fullCode[state.currentLanguage] = action.payload;
     },
+    updateFullCode: (
+      state,
+      action: PayloadAction<CodeEditorSliceStateType["fullCode"]>
+    ) => {
+      state.fullCode = action.payload
+    },
   },
 });
 
 export default codeEditorSlice.reducer;
 
-export const { updateCurrentLanguage, updateCodeValue } =
+export const { updateCurrentLanguage, updateCodeValue, updateFullCode } =
   codeEditorSlice.actions;

@@ -15,7 +15,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/code-editor/:urlId" element={<Compiler />} />
+        <Route path="/code-editor/:urlId?" element={<Compiler />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </ThemeProvider>
