@@ -17,8 +17,13 @@ import {
 import { RootState } from "@/app/store";
 import { handleError } from "@/utils/handleErrors";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { RiLoader4Line } from "react-icons/ri";
 
 const EditorHeader = () => {
+  const [saveLoading, setSaveLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentLanguage = useSelector(
     (state: RootState) => state.codeEditorSlice.currentLanguage
@@ -27,6 +32,7 @@ const EditorHeader = () => {
     (state: RootState) => state.codeEditorSlice.fullCode
   );
   const handleSaveCode = async () => {
+    setSaveLoading(true);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URI}/code-editor/save`,
@@ -36,8 +42,11 @@ const EditorHeader = () => {
       );
       console.log(`Resonse: ${response}`);
       console.log(`Response.data: ${response.data}`);
+      navigate(`/code-editor/${response.data.url}`, { replace: true });
     } catch (error) {
       handleError(error);
+    } finally {
+      setSaveLoading(false);
     }
   };
   return (
@@ -45,10 +54,20 @@ const EditorHeader = () => {
       <div className="flex gap-4">
         <button
           onClick={handleSaveCode}
+          disabled={saveLoading}
           className="px-4 py-1 flex justify-center items-center gap-2 bg-green-600 rounded-md hover:bg-green-700 transition-all ease-in-out duration-300 hover:scale-105"
         >
-          <FaCloud />
-          Save
+          {saveLoading ? (
+            <>
+              <RiLoader4Line className="animate-spin" />
+              Saving...
+            </>
+          ) : (
+            <>
+              <FaCloud />
+              Save
+            </>
+          )}
         </button>
         <button className="px-4 py-1 flex justify-center items-center gap-2 bg-green-600 rounded-md hover:bg-green-700 transition-all ease-in-out duration-300 hover:scale-105">
           <FaShare />

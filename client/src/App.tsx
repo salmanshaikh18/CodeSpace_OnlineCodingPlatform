@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -8,12 +8,14 @@ import PageNotFound from "./pages/PageNotFound";
 import { ThemeProvider } from "@/components/theme-provider"
 
 const App = () => {
+  const {urlId} = useParams()
+  console.log(urlId)
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/code-editor" element={<Compiler />} />
+        <Route path="/code-editor/:urlId" element={<Compiler />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </ThemeProvider>

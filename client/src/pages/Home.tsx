@@ -37,7 +37,7 @@ const Home = () => {
               delaySpeed={1000}
             />
           </div>
-          <h2 className="text-[#976CE5] sm:text-2xl text-lg font-semibold">
+          <h2 className="text-[#976CE5] sm:text-xl md:text-2xl text-lg font-semibold">
             A One Stop Solution For Developers
           </h2>
           <p className="text-center p-6 text-[16px] sm:text-lg">
