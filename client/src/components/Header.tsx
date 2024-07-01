@@ -3,6 +3,7 @@ import "../styles/gradientText.css";
 import logo from "../assets/logo.png";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useState } from "react";
+import { Button } from "./ui/button";
 
 const Header = () => {
   const [showMenus, setShowMenus] = useState(false);
@@ -17,14 +18,14 @@ const Header = () => {
         <img className="h-8 w-8" src={logo} alt="" />
         <span className="sp font-bold select-none">The CodeSpace</span>
       </NavLink>
-      <ul className="sm:flex hidden px-4 gap-8 justify-center items-center">
+      <ul className="sm:flex hidden px-4 gap-4 justify-center items-center">
         <li>
           <NavLink
             to="/code-editor"
             className={({ isActive }) =>
               `${
                 isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-              } font-semibold transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+              } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
             }
           >
             CodeEditor
@@ -36,22 +37,38 @@ const Header = () => {
             className={({ isActive }) =>
               `${
                 isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-              } font-semibold transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+              } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
             }
           >
             Profile
           </NavLink>
         </li>
+      </ul>
+      <ul className="sm:flex hidden justify-center items-center gap-2">
         <li>
           <NavLink
-            to="/ai-assistant"
+            to="/user/login"
             className={({ isActive }) =>
               `${
-                isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-              } font-semibold transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                isActive ? "bg-[#39186e]" : "bg-[#4a189b]"
+              } font-medium transition-all ease-in-out duration-300 hover:scale-105 hover:bg-[#391863] px-4 text-sm py-2 rounded-md bg-[#6439a8]`
             }
           >
-            Ai-Assistant
+            {/* <Button variant={"secondary"} className="hover:bg-[#4d2292] font-medium bg-[#6439a8]">Login</Button> */}
+            Login
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/user/register"
+            className={({ isActive }) =>
+              `${
+                isActive ? "bg-[#39186e]" : "bg-[#4a189b]"
+              } font-medium transition-all ease-in-out duration-300 hover:scale-105 hover:bg-[#391863] px-4 text-sm py-2 rounded-md bg-[#6439a8]`
+            }
+          >
+            {/* <Button variant={"secondary"} className="hover:bg-[#4d2292] font-medium bg-[#6439a8]">Login</Button> */}
+            Register
           </NavLink>
         </li>
       </ul>
@@ -79,7 +96,7 @@ const Header = () => {
                     className={({ isActive }) =>
                       `${
                         isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                      } font-semibold transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                      } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
                     }
                   >
                     Home
@@ -92,7 +109,7 @@ const Header = () => {
                     className={({ isActive }) =>
                       `${
                         isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                      } font-semibold transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                      } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
                     }
                   >
                     CodeEditor
@@ -105,7 +122,7 @@ const Header = () => {
                     className={({ isActive }) =>
                       `${
                         isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                      } font-semibold translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                      } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
                     }
                   >
                     Profile
@@ -114,24 +131,11 @@ const Header = () => {
                 <li className="border-b-2 border-zinc-500 px-4 pb-1">
                   <NavLink
                     onClick={() => setShowMenus(false)}
-                    to="/ai-assistant"
+                    to="/user/login"
                     className={({ isActive }) =>
                       `${
                         isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                      } font-semibold translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
-                    }
-                  >
-                    Ai-Assistant
-                  </NavLink>
-                </li>
-                <li className="border-b-2 border-zinc-500 px-4 pb-1">
-                  <NavLink
-                    onClick={() => setShowMenus(false)}
-                    to="/login"
-                    className={({ isActive }) =>
-                      `${
-                        isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                      } font-semibold translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                      } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
                     }
                   >
                     Login
@@ -140,14 +144,14 @@ const Header = () => {
                 <li className="border-b-2 border-zinc-500 px-4 pb-1">
                   <NavLink
                     onClick={() => setShowMenus(false)}
-                    to="/signup"
+                    to="/user/register"
                     className={({ isActive }) =>
                       `${
                         isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                      } font-semibold translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                      } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
                     }
                   >
-                    Signup
+                    Register
                   </NavLink>
                 </li>
               </ul>

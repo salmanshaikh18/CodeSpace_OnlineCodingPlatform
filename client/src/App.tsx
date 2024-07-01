@@ -8,6 +8,8 @@ import PageNotFound from "./pages/PageNotFound";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 const App = () => {
   const { urlId } = useParams();
@@ -18,6 +20,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/code-editor/:urlId?" element={<Compiler />} />
+        <Route path="/user/register" element={<Register />} />
+        <Route path="/user/login" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ToastContainer
