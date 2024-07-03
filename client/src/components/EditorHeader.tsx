@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { RiLoader4Line } from "react-icons/ri";
 import { DialogCloseButton } from "./CodeShareDialogueBtn";
+import { useSaveCodeMutation } from "@/app/features/apiSlice";
 
 const EditorHeader = () => {
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
@@ -32,18 +33,20 @@ const EditorHeader = () => {
   const fullCode = useSelector(
     (state: RootState) => state.codeEditorSlice.fullCode
   );
+
+  const [saveCode, { isLoading }] = useSaveCodeMutation();
   const handleSaveCode = async () => {
     setSaveLoading(true);
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/code-editor/save`,
-        {
-          fullCode: fullCode,
-        }
-      );
-      console.log(`Resonse: ${response}`);
-      console.log(`Response.data: ${response.data}`);
-      navigate(`/code-editor/${response.data.url}`, { replace: true });
+      // const response = await axios.post(
+      //   `${import.meta.env.VITE_BACKEND_URI}/code-editor/save`,
+      //   {
+      //     fullCode: fullCode,
+      //   }
+      // );
+
+      await saveCode(fullCode).unwrap();
+      // navigate(`/code-editor/${response.data.url}`, { replace: true });
     } catch (error) {
       handleError(error);
     } finally {

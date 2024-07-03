@@ -131,7 +131,7 @@ export default function Login() {
           <small className="flex text-zinc-400 text-md justify-center items-center mt-5">
             Don't have an account?&nbsp;{" "}
             <Link
-              to="/signup"
+              to="/user/register"
               className="text-blue-500 text-md hover:underline font-semibold"
             >
               {" "}

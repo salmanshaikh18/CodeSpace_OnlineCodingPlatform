@@ -144,7 +144,7 @@ export default function Signup() {
           <small className="flex text-zinc-400  justify-center items-center mt-5">
             Already have an account?&nbsp;{" "}
             <Link
-              to="/login"
+              to="/user/login"
               className="text-blue-500 hover:underline font-semibold"
             >
               {" "}
