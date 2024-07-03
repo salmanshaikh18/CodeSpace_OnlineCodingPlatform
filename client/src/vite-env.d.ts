@@ -26,3 +26,8 @@ interface codeType {
   title: string;
   _id?: string;
 }
+
+interface logoutType {
+  message: string;
+}
+

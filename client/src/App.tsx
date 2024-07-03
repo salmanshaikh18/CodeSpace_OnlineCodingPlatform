@@ -10,10 +10,16 @@ import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import { useSelector } from "react-redux";
+import { RootState } from "./app/store";
 
 const App = () => {
   const { urlId } = useParams();
   console.log(urlId);
+  const currentUser = useSelector(
+    (state: RootState) => state.appSlice.currentUser
+  );
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Header />
@@ -22,6 +28,10 @@ const App = () => {
         <Route path="/code-editor/:urlId?" element={<Compiler />} />
         <Route path="/user/register" element={<Register />} />
         <Route path="/user/login" element={<Login />} />
+        <Route
+          path={`/profile/${currentUser.username}`}
+          element={<Profile />}
+        />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ToastContainer

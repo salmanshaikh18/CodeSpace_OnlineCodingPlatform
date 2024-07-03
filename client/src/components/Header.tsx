@@ -1,13 +1,33 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../styles/gradientText.css";
 import logo from "../assets/logo.png";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { handleError } from "@/utils/handleErrors";
+import { useLogoutMutation } from "@/app/features/api";
+import { updateCurrentUser, updateIsLoggedIn } from "@/app/features/appSlice";
+import { RiLoader2Line } from "react-icons/ri";
+import { toast } from "react-toastify";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+// import { RootState } from "@reduxjs/toolkit/query";
 
 const Header = () => {
+  const [logout, { isLoading }] = useLogoutMutation();
+  const dispatch = useDispatch();
   const [showMenus, setShowMenus] = useState(false);
-  
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.appSlice.isLoggedIn
+  );
+
+ 
+
+  const currentUser = useSelector(
+    (state: RootState) => state.appSlice.currentUser
+  );
+
   return (
     <nav className="max-w-full h-[60px] bg-gray-900 text-white p-3 flex justify-between items-center">
       <NavLink
@@ -45,33 +65,59 @@ const Header = () => {
           </NavLink>
         </li>
       </ul>
+
       <ul className="sm:flex hidden justify-center items-center gap-2">
-        <li>
-          <NavLink
-            to="/user/login"
-            className={({ isActive }) =>
-              `${
-                isActive ? "bg-[#39186e]" : "bg-[#4a189b]"
-              } font-medium transition-all ease-in-out duration-300 hover:scale-105 hover:bg-[#391863] px-4 text-sm py-2 rounded-md bg-[#6439a8]`
-            }
-          >
-            {/* <Button variant={"secondary"} className="hover:bg-[#4d2292] font-medium bg-[#6439a8]">Login</Button> */}
-            Login
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/user/register"
-            className={({ isActive }) =>
-              `${
-                isActive ? "bg-[#39186e]" : "bg-[#4a189b]"
-              } font-medium transition-all ease-in-out duration-300 hover:scale-105 hover:bg-[#391863] px-4 text-sm py-2 rounded-md bg-[#6439a8]`
-            }
-          >
-            {/* <Button variant={"secondary"} className="hover:bg-[#4d2292] font-medium bg-[#6439a8]">Login</Button> */}
-            Register
-          </NavLink>
-        </li>
+        {isLoggedIn ? (
+          <>
+            {/* <Button
+              onClick={handleLogout}
+              variant={"secondary"}
+              className="hover:bg-[#4d2292] font-medium bg-[#6439a8]"
+            >
+              {isLoading && <RiLoader2Line className="animate-spin" />}
+              Logout
+            </Button> */}
+            <li>
+              <Link to={`/profile/${currentUser.username}`}>
+                <Avatar className="border-2 border-blue-500 transition-shadow ease-in-out duration-500 hover:border-green-500">
+                  <AvatarImage src={currentUser.picture} />
+                  <AvatarFallback className="capitalize">
+                    {currentUser.username?.slice(0, 2)}
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <NavLink
+                to="/user/login"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "bg-[#39186e]" : "bg-[#4a189b]"
+                  } font-medium transition-all ease-in-out duration-300 hover:scale-105 hover:bg-[#391863] px-4 text-sm py-2 rounded-md bg-[#6439a8]`
+                }
+              >
+                {/* <Button variant={"secondary"} className="hover:bg-[#4d2292] font-medium bg-[#6439a8]">Login</Button> */}
+                Login
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/user/register"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "bg-[#39186e]" : "bg-[#4a189b]"
+                  } font-medium transition-all ease-in-out duration-300 hover:scale-105 hover:bg-[#391863] px-4 text-sm py-2 rounded-md bg-[#6439a8]`
+                }
+              >
+                {/* <Button variant={"secondary"} className="hover:bg-[#4d2292] font-medium bg-[#6439a8]">Login</Button> */}
+                Register
+              </NavLink>
+            </li>
+          </>
+        )}
       </ul>
       <div className="only-on-phone sm:hidden gap-2 flex justify-center items-center text-3xl ">
         {!showMenus ? (
