@@ -231,3 +231,14 @@ export const changePassword = async (req: Request, res: Response) => {
     console.log("Error inside changePassword controller: ", error);
   }
 };
+
+export const userDetails = async (req: Request, res: Response) => {
+  const userId = req._id
+  try {
+    
+  } catch (error) {
+    return res.status(500).json({
+      message: "Cannot fetch user details!"
+    })
+  }
+}

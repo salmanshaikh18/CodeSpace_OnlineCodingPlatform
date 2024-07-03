@@ -3,26 +3,15 @@ import "../styles/gradientText.css";
 import logo from "../assets/logo.png";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { handleError } from "@/utils/handleErrors";
-import { useLogoutMutation } from "@/app/features/api";
-import { updateCurrentUser, updateIsLoggedIn } from "@/app/features/appSlice";
-import { RiLoader2Line } from "react-icons/ri";
-import { toast } from "react-toastify";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-// import { RootState } from "@reduxjs/toolkit/query";
+import { useSelector } from "react-redux";
 
 const Header = () => {
-  const [logout, { isLoading }] = useLogoutMutation();
-  const dispatch = useDispatch();
   const [showMenus, setShowMenus] = useState(false);
   const isLoggedIn = useSelector(
     (state: RootState) => state.appSlice.isLoggedIn
   );
-
- 
 
   const currentUser = useSelector(
     (state: RootState) => state.appSlice.currentUser
@@ -52,31 +41,11 @@ const Header = () => {
             CodeEditor
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/profile/:username"
-            className={({ isActive }) =>
-              `${
-                isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-              } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
-            }
-          >
-            Profile
-          </NavLink>
-        </li>
       </ul>
 
       <ul className="sm:flex hidden justify-center items-center gap-2">
         {isLoggedIn ? (
           <>
-            {/* <Button
-              onClick={handleLogout}
-              variant={"secondary"}
-              className="hover:bg-[#4d2292] font-medium bg-[#6439a8]"
-            >
-              {isLoading && <RiLoader2Line className="animate-spin" />}
-              Logout
-            </Button> */}
             <li>
               <Link to={`/profile/${currentUser.username}`}>
                 <Avatar className="border-2 border-blue-500 transition-shadow ease-in-out duration-500 hover:border-green-500">
@@ -99,7 +68,6 @@ const Header = () => {
                   } font-medium transition-all ease-in-out duration-300 hover:scale-105 hover:bg-[#391863] px-4 text-sm py-2 rounded-md bg-[#6439a8]`
                 }
               >
-                {/* <Button variant={"secondary"} className="hover:bg-[#4d2292] font-medium bg-[#6439a8]">Login</Button> */}
                 Login
               </NavLink>
             </li>
@@ -112,7 +80,6 @@ const Header = () => {
                   } font-medium transition-all ease-in-out duration-300 hover:scale-105 hover:bg-[#391863] px-4 text-sm py-2 rounded-md bg-[#6439a8]`
                 }
               >
-                {/* <Button variant={"secondary"} className="hover:bg-[#4d2292] font-medium bg-[#6439a8]">Login</Button> */}
                 Register
               </NavLink>
             </li>
