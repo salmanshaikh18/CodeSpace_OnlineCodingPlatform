@@ -41,8 +41,19 @@ export const api = createApi({
         method: "POST",
       }),
     }),
+    getUserDetails: builder.query<userInfoType, void>({
+      query: () => ({
+        url: "/user/user-details",
+        cache: "no-store"
+      }),
+    }),
   }),
 });
 
-export const { useSaveCodeMutation, useLoadCodeMutation, useLoginMutation, useLogoutMutation } =
-  api;
+export const {
+  useSaveCodeMutation,
+  useLoadCodeMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useGetUserDetailsQuery,
+} = api;

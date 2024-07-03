@@ -11,9 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./app/store";
 import ChangePassword from "./pages/ChangePassword";
+import { useEffect } from "react";
+import { useGetUserDetailsQuery } from "./app/features/api";
+import { updateCurrentUser, updateIsLoggedIn } from "./app/features/appSlice";
 
 const App = () => {
   const { urlId } = useParams();
@@ -21,6 +24,21 @@ const App = () => {
   const currentUser = useSelector(
     (state: RootState) => state.appSlice.currentUser
   );
+
+  const { data, error } = useGetUserDetailsQuery();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(updateCurrentUser(data));
+      dispatch(updateIsLoggedIn(true));
+    } else if (error) {
+      dispatch(updateCurrentUser({}));
+      dispatch(updateIsLoggedIn(false));
+    }
+    // console.log("data: ", data)
+    // console.log("error: ", error)
+  }, [data, error]);
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Header />

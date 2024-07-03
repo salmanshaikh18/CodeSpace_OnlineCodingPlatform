@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
+import { AuthRequest } from "../middlewares/verifyToken";
 
 export const register = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -203,10 +204,10 @@ export const login = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
   try {
     // Clear Cookie:
-    res.clearCookie("token")
+    res.clearCookie("token");
     return res.status(200).json({
-        message: "You have been logged out successfully. See you next time!"
-    })
+      message: "You have been logged out successfully. See you next time!",
+    });
   } catch (error) {
     return res.status(500).send({
       message:
@@ -232,13 +233,20 @@ export const changePassword = async (req: Request, res: Response) => {
   }
 };
 
-export const userDetails = async (req: Request, res: Response) => {
-  const userId = req._id
+export const userDetails = async (req: AuthRequest, res: Response) => {
+  const userId = req._id;
   try {
-    
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Cannot find the user!" });
+    }
+    return res.status(200).json({
+      username: user.username,
+      picture: user.picture,
+      email: user.email,
+      savedCodes: user.savedCodes,
+    });
   } catch (error) {
-    return res.status(500).json({
-      message: "Cannot fetch user details!"
-    })
+    return res.status(500).json({ message: "Cannot fetch user details" });
   }
-}
+};
