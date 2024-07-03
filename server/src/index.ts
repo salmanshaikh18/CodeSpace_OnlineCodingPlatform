@@ -11,7 +11,10 @@ const PORT = process.env.PORT;
 
 // Middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: process.env.FRONTEND_URI,
+}));
 
 app.get("/", (req: Request, res: Response) => {
   return res.status(200).send("ok");

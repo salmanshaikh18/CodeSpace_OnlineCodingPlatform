@@ -12,12 +12,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
-// import { useLoginMutation } from "@/redux/slices/api";
-// import { handleError } from "@/utils/handleError";
+import { useLoginMutation } from "@/app/features/api";
+import { handleError } from "@/utils/handleErrors";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-// import { updateCurrentUser, updateIsLoggedIn } from "@/redux/slices/appSlice";
-// import toast from "react-hot-toast";
-import {toast} from "react-toastify";
+import { updateCurrentUser, updateIsLoggedIn } from "@/app/features/appSlice";
+import { RiLoader2Line } from "react-icons/ri";
 
 const formSchema = z.object({
   userId: z.string(),
@@ -25,9 +25,9 @@ const formSchema = z.object({
 });
 
 export default function Login() {
-//   const [login, { isLoading }] = useLoginMutation();
-  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,13 +38,14 @@ export default function Login() {
 
   async function handleLogin(values: z.infer<typeof formSchema>) {
     try {
-    //   const response = await login(values).unwrap();
-    //   dispatch(updateCurrentUser(response));
-    //   dispatch(updateIsLoggedIn(true));
+      const response: any = await login(values).unwrap();
+      console.log("Response: ", response);
+      dispatch(updateCurrentUser(response));
+      dispatch(updateIsLoggedIn(true));
       navigate("/");
-      toast.success("Success! You're now logged in and ready to explore. :)");
+      toast.success(response.message);
     } catch (error) {
-    //   handleError(error);
+      handleError(error);
     }
   }
 
@@ -72,8 +73,8 @@ export default function Login() {
                   <FormControl>
                     <Input
                       required
-                      // type="text"
-                    //   disabled={isLoading}
+                      type="text"
+                      disabled={isLoading}
                       placeholder="Username or Email"
                       className="rounded-md p-2 border outline-none border-[#03CF86a] text-zinc-200 pl-4 max-h-40 w-full bg-[#171F38]"
                       {...field}
@@ -92,7 +93,7 @@ export default function Login() {
                   <FormControl>
                     <Input
                       required
-                    //   disabled={isLoading}
+                      disabled={isLoading}
                       type="password"
                       placeholder="Password"
                       className="rounded-md p-2 border outline-none border-[#03CF86a] text-zinc-200 pl-4 max-h-40 w-full bg-[#171F38]"
@@ -117,12 +118,12 @@ export default function Login() {
               </small>
             </div>
             <Button
-            //   loading={isLoading}
-            //   disabled={isLoading}
-              className="w-full gap-1 bg-blue-700 hover:bg-blue-900 transition-all ease-in-out duration-300"
+              disabled={isLoading}
+              className="w-full gap-2 bg-blue-700 hover:bg-blue-900 transition-all ease-in-out duration-300"
               variant={"secondary"}
               type="submit"
             >
+              {isLoading && <RiLoader2Line className="animate-spin" />}
               Login
             </Button>
           </form>

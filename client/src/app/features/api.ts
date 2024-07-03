@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CodeEditorSliceStateType } from "./codeEditorSlice";
+import { loginCredentialsType, userInfoType } from "@/vite-env";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BACKEND_URI,
+    credentials: "include",
   }),
   endpoints: (builder) => ({
     saveCode: builder.mutation<
@@ -26,7 +28,16 @@ export const api = createApi({
         body: body,
       }),
     }),
+    login: builder.mutation<userInfoType, loginCredentialsType>(
+      {
+        query: (body) => ({
+          url: "user/login",
+          method: "POST",
+          body: body,
+        }),
+      }
+    ),
   }),
 });
 
-export const { useSaveCodeMutation, useLoadCodeMutation } = api;
+export const { useSaveCodeMutation, useLoadCodeMutation, useLoginMutation } = api;

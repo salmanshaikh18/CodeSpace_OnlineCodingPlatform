@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import MonacoEditor from "@/components/MonacoEditor";
-import { useLoadCodeMutation } from "@/app/features/apiSlice";
+import { useLoadCodeMutation } from "@/app/features/api";
 import Loader from "../components/Loader/Loader"
 
 const CodeEditor = () => {

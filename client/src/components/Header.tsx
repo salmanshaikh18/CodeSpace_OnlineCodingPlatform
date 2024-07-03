@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 
 const Header = () => {
   const [showMenus, setShowMenus] = useState(false);
+  
   return (
     <nav className="max-w-full h-[60px] bg-gray-900 text-white p-3 flex justify-between items-center">
       <NavLink
