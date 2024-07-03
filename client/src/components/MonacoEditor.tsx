@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { updateCodeValue } from "@/app/features/codeEditorSlice";
 import { Editor } from "@monaco-editor/react";
+import Loader from "./Loader/Loader";
 
 const MonacoEditor = () => {
   const currentLanguage = useSelector(
@@ -44,7 +45,7 @@ const MonacoEditor = () => {
         }}
         theme="vs-dark"
         language={currentLanguage}
-        className="code-editor outline-none text-sm focus:ring-0 border-none "
+        className="code-editor text-blue-500 outline-none text-sm focus:ring-0 border-none "
         value={fullCode[currentLanguage] ?? ""}
         // onChange={onChange}
         onChange={(value) => {
@@ -52,6 +53,7 @@ const MonacoEditor = () => {
             onChange(value);
           }
         }}
+        loading={<Loader />} // Remove the default loading message
       />
     </div>
   );

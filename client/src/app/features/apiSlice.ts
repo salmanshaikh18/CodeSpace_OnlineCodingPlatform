@@ -16,7 +16,17 @@ export const api = createApi({
         body: fullCode,
       }),
     }),
+    loadCode: builder.mutation<
+      { fullCode: CodeEditorSliceStateType["fullCode"] },
+      { urlId: string }
+    >({
+      query: (body) => ({
+        url: "code-editor/load",
+        method: "POST",
+        body: body,
+      }),
+    }),
   }),
 });
 
-export const { useSaveCodeMutation } = api;
+export const { useSaveCodeMutation, useLoadCodeMutation } = api;

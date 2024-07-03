@@ -33,10 +33,10 @@ export const loadCode = async (req: Request, res: Response) => {
     // console.log(existingCode?._id); // Logging the ID if found
     return res.status(200).json({
       message: "Code loaded successfully :)",
-      loadedCode: existingCode.fullCode,
+      fullCode: existingCode.fullCode,
     });
   } catch (error) {
     console.error("Error while loading code:", error);
-    return res.status(500).json({ message: "Error while loading code", error });
+    return res.status(500).json({ message: "Error while loading code. So, default code is loaded", error });
   }
 };

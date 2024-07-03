@@ -8,38 +8,39 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { handleError } from "@/utils/handleErrors";
-import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import MonacoEditor from "@/components/MonacoEditor";
+import { useLoadCodeMutation } from "@/app/features/apiSlice";
+import Loader from "../components/Loader/Loader"
 
 const CodeEditor = () => {
   const { urlId } = useParams();
-  const dispatch = useDispatch()
+  const [loadExistingCode, { isLoading }] = useLoadCodeMutation();
+  const dispatch = useDispatch();
   const loadCode = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URI}/code-editor/load`, {
-        urlId: urlId,
-      })
-      dispatch(updateFullCode(response.data.loadedCode))
-      console.log(response.data)
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error?.response?.status === 500) {
-          toast.error("Invalid URL, Default Code is loaded")
-        }
+      if (urlId) {
+        const response = await loadExistingCode({ urlId }).unwrap();
+        dispatch(updateFullCode(response.fullCode));
       }
-      handleError(error)
+    } catch (error) {
+      handleError(error);
     }
-  }
+  };
 
   useEffect(() => {
     if (urlId) {
-      loadCode()
+      loadCode();
     }
-  }, [urlId])
+  }, [urlId]);
+
+  if (isLoading) return (
+    <>
+      <Loader />
+    </>
+  )
   return (
     <div className="text-red-500 h-[calc(100vh-60px-50px)] w-full">
       <EditorHeader />
