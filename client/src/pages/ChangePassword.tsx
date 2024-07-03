@@ -1,6 +1,6 @@
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
-import { handleError } from "@/utils/handleErrors";
+import { handleError } from "@/utils/handleError";
 import { MouseEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

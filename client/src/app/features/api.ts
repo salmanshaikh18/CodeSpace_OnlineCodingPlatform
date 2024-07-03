@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CodeEditorSliceStateType } from "./codeEditorSlice";
-import { loginCredentialsType, logoutType, userInfoType } from "@/vite-env";
+import {
+  loginCredentialsType,
+  logoutType,
+  registerCredentialsType,
+  userInfoType,
+} from "@/vite-env";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
@@ -35,6 +40,13 @@ export const api = createApi({
         body: body,
       }),
     }),
+    register: builder.mutation<userInfoType, registerCredentialsType>({
+      query: (body) => ({
+        url: "/user/register",
+        method: "POST",
+        body: body,
+      }),
+    }),
     logout: builder.mutation<logoutType, void>({
       query: () => ({
         url: "user/logout",
@@ -44,7 +56,7 @@ export const api = createApi({
     getUserDetails: builder.query<userInfoType, void>({
       query: () => ({
         url: "/user/user-details",
-        cache: "no-store"
+        cache: "no-store",
       }),
     }),
   }),
@@ -56,4 +68,5 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useGetUserDetailsQuery,
+  useRegisterMutation,
 } = api;

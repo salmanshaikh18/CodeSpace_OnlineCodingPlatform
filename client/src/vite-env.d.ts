@@ -4,6 +4,7 @@ import { CodeEditorSliceStateType } from "./app/features/codeEditorSlice";
 
 //users types
 interface userInfoType {
+  message: string,
   username: string;
   picture: string;
   email: string;
@@ -15,7 +16,7 @@ interface loginCredentialsType {
   password: string;
 }
 
-interface signupCredentialsType {
+interface registerCredentialsType {
   username: string;
   email: string;
   password: string;

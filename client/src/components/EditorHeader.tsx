@@ -13,7 +13,7 @@ import {
   updateCurrentLanguage,
 } from "@/app/features/codeEditorSlice";
 import { RootState } from "@/app/store";
-import { handleError } from "@/utils/handleErrors";
+import { handleError } from "@/utils/handleError";
 
 import { useNavigate } from "react-router-dom";
 

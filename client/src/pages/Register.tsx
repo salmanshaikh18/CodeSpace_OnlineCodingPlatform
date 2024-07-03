@@ -18,6 +18,10 @@ import { useDispatch } from "react-redux";
 // import { updateCurrentUser, updateIsLoggedIn } from "@/redux/slices/appSlice";
 // import toast from "react-hot-toast";
 import { toast } from "react-toastify";
+import { handleError } from "@/utils/handleError";
+import { useRegisterMutation } from "@/app/features/api";
+import { updateCurrentUser, updateIsLoggedIn } from "@/app/features/appSlice";
+import { RiLoader2Line } from "react-icons/ri";
 
 const formSchema = z.object({
   username: z.string(),
@@ -28,7 +32,7 @@ const formSchema = z.object({
 export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [signup, { isLoading }] = useSignupMutation();
+  const [register, { isLoading }] = useRegisterMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,20 +42,16 @@ export default function Signup() {
     },
   });
 
-  async function handleSignup(values: z.infer<typeof formSchema>) {
+  async function handleRegister(values: z.infer<typeof formSchema>) {
     try {
-      // const response = await signup(values).unwrap();
-      // if (response.username === "" || response.email === "") {
-      //   return toast.error("UserName and Email Should Requierd! ")
-      // }
-      // dispatch(updateCurrentUser(response));
-      // dispatch(updateIsLoggedIn(true));
-      navigate("/");
-      // console.log("REs: ", response)
-      toast.success("User Signed up Successfully :)");
+      const response = await register(values).unwrap();
+      dispatch(updateCurrentUser(response))
+      dispatch(updateIsLoggedIn(true))
+      toast.success(response.message);
+      navigate("/")
     } catch (error) {
       console.log(error);
-      // handleError(error);
+      handleError(error);
     }
   }
   return (
@@ -68,7 +68,7 @@ export default function Signup() {
         </div>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleSignup)}
+            onSubmit={form.handleSubmit(handleRegister)}
             className="space-y-4"
           >
             <FormField
@@ -80,7 +80,7 @@ export default function Signup() {
                   <FormControl>
                     <Input
                       className="rounded-md p-2 border outline-none border-[#03CF86a] text-zinc-200 pl-4 max-h-40 w-full bg-[#171F38]"
-                      // disabled={isLoading}
+                      disabled={isLoading}
                       placeholder="Username"
                       {...field}
                     />
@@ -99,7 +99,7 @@ export default function Signup() {
                   <FormControl>
                     <Input
                       className="rounded-md p-2 border outline-none border-[#03CF86a] text-zinc-200 pl-4 max-h-40 w-full bg-[#171F38]"
-                      // disabled={isLoading}
+                      disabled={isLoading}
                       type="email"
                       placeholder="Email"
                       {...field}
@@ -136,6 +136,7 @@ export default function Signup() {
               variant={"secondary"}
               type="submit"
             >
+              {isLoading && <RiLoader2Line className="animate-spin" />}
               Signup
             </Button>
           </form>

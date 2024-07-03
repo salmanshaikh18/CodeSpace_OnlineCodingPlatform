@@ -3,7 +3,7 @@ import { updateCurrentUser, updateIsLoggedIn } from "@/app/features/appSlice";
 import { RootState } from "@/app/store";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { handleError } from "@/utils/handleErrors";
+import { handleError } from "@/utils/handleError";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

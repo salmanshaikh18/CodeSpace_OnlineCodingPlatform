@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "@/app/features/api";
-import { handleError } from "@/utils/handleErrors";
+import { handleError } from "@/utils/handleError";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { updateCurrentUser, updateIsLoggedIn } from "@/app/features/appSlice";
