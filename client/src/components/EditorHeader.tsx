@@ -1,10 +1,8 @@
-import { FaCloud, FaCss3Alt, FaHtml5, FaShare } from "react-icons/fa";
+import { FaCloud, FaCss3Alt, FaHtml5 } from "react-icons/fa";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -16,15 +14,15 @@ import {
 } from "@/app/features/codeEditorSlice";
 import { RootState } from "@/app/store";
 import { handleError } from "@/utils/handleErrors";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+
 import { RiLoader4Line } from "react-icons/ri";
 import { DialogCloseButton } from "./CodeShareDialogueBtn";
 import { useSaveCodeMutation } from "@/app/features/apiSlice";
+import { toast } from "react-toastify";
 
 const EditorHeader = () => {
-  const [saveLoading, setSaveLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentLanguage = useSelector(
@@ -36,21 +34,13 @@ const EditorHeader = () => {
 
   const [saveCode, { isLoading }] = useSaveCodeMutation();
   const handleSaveCode = async () => {
-    setSaveLoading(true);
     try {
-      // const response = await axios.post(
-      //   `${import.meta.env.VITE_BACKEND_URI}/code-editor/save`,
-      //   {
-      //     fullCode: fullCode,
-      //   }
-      // );
-
-      await saveCode(fullCode).unwrap();
-      // navigate(`/code-editor/${response.data.url}`, { replace: true });
+      const response = await saveCode(fullCode).unwrap();
+      console.log(response);
+      navigate(`/code-editor/${response.url}`, { replace: true });
+      toast.success("Code saved successfully :)");
     } catch (error) {
       handleError(error);
-    } finally {
-      setSaveLoading(false);
     }
   };
   return (
@@ -58,10 +48,10 @@ const EditorHeader = () => {
       <div className="flex gap-4">
         <button
           onClick={handleSaveCode}
-          disabled={saveLoading}
+          disabled={isLoading}
           className="px-4 py-1 flex justify-center items-center gap-2 bg-green-600 rounded-md hover:bg-green-700 transition-all ease-in-out duration-300 hover:scale-105"
         >
-          {saveLoading ? (
+          {isLoading ? (
             <>
               <RiLoader4Line className="animate-spin" />
               Saving...
