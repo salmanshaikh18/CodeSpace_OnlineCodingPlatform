@@ -215,3 +215,19 @@ export const logout = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const changePassword = async (req: Request, res: Response) => {
+  try {
+    const { password, email } = req.body;
+    bcrypt
+      .hash(password, 10)
+      .then((hashedPassword) => {
+        User.findOneAndUpdate({ email: email }, { password: hashedPassword })
+          .then(() => res.status(200).send({ Status: "Success" }))
+          .catch((err) => res.status(400).send({ Status: err }));
+      })
+      .catch((err) => res.status(400).send({ Status: err }));
+  } catch (error) {
+    console.log("Error inside changePassword controller: ", error);
+  }
+};

@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import { useSelector } from "react-redux";
 import { RootState } from "./app/store";
+import ChangePassword from "./pages/ChangePassword";
 
 const App = () => {
   const { urlId } = useParams();
@@ -31,6 +32,10 @@ const App = () => {
         <Route
           path={`/profile/${currentUser.username}`}
           element={<Profile />}
+        />
+        <Route
+          path={`/profile/${currentUser.username}/change-password`}
+          element={<ChangePassword />}
         />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
