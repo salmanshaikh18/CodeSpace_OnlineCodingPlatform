@@ -71,12 +71,12 @@ const ChangePassword = () => {
     }
   };
   return (
-    <div className="__right flex flex-col justify-center w-[90vw] h-[80vh] ml-20 items-center gap-4 my-10">
-      <h1 className="text-[#03CF86] text-center w-[30%] mb-4 font-normal text-3xl">
+    <div className="__right flex flex-col justify-center w-full h-[80vh] items-center gap-4 my-10">
+      <h1 className="text-[#03CF86] text-center w-full sm:w-[30%] mb-4 font-normal text-2xl sm:text-3xl">
         Change Password
       </h1>
       <input
-        className="p-2 w-[30%] border outline-none border-[#03CF86a] rounded-md bg-[#171F38]"
+        className="p-2 w-[90%] sm:w-[400px] border outline-none border-[#03CF86a] rounded-md bg-[#171F38]"
         type="password"
         name="password"
         value={password}
@@ -84,7 +84,7 @@ const ChangePassword = () => {
         placeholder="Enter Your New Password"
       />
       <input
-        className="p-2 w-[30%] border outline-none border-[#03CF86a] rounded-md bg-[#171F38]"
+        className="p-2 w-[90%] sm:w-[400px] border outline-none border-[#03CF86a] rounded-md bg-[#171F38]"
         type="password"
         name="confirmPassword"
         value={confirmPassword}
@@ -92,7 +92,7 @@ const ChangePassword = () => {
         placeholder="Confirm Your New Password"
       />
       <Button
-        className="w-[30%] bg-blue-800 transition-all ease-in-out duration-500 hover:bg-blue-900"
+        className="w-[90%] sm:w-[400px] bg-blue-800 transition-all ease-in-out duration-500 hover:bg-blue-900"
         variant={"secondary"}
         onClick={handleSubmit}
       >

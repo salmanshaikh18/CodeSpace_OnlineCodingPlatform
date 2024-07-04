@@ -46,7 +46,7 @@ const Header = () => {
       <ul className="sm:flex hidden justify-center items-center gap-4">
         {isLoggedIn ? (
           <>
-           <li>
+            <li>
               <NavLink
                 to={`/all-repositories`}
                 className={({ isActive }) =>
@@ -80,7 +80,6 @@ const Header = () => {
                 </Avatar>
               </Link>
             </li>
-           
           </>
         ) : (
           <>
@@ -111,7 +110,7 @@ const Header = () => {
           </>
         )}
       </ul>
-      <div className="only-on-phone sm:hidden gap-2 flex justify-center items-center text-3xl ">
+      <div className="only-on-phone sm:hidden gap-2 flex justify-center items-center text-2xl ">
         {!showMenus ? (
           <IoMenu
             className="z-20 cursor-pointer"
@@ -126,7 +125,7 @@ const Header = () => {
               />
             </div>
 
-            <div className="mt-[100px] p-4 justify-center items-center flex-col gap-4">
+            <div className="mt-[120px] p-4 justify-center items-center flex-col gap-4">
               <ul className="flex flex-col gap-8 justify-center items-center">
                 <li className="border-b-2 border-zinc-500 px-4 pb-1">
                   <NavLink
@@ -154,45 +153,79 @@ const Header = () => {
                     CodeEditor
                   </NavLink>
                 </li>
-                <li className="border-b-2 border-zinc-500 px-4 pb-1">
-                  <NavLink
-                    onClick={() => setShowMenus(false)}
-                    to="/profile/:username"
-                    className={({ isActive }) =>
-                      `${
-                        isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                      } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
-                    }
-                  >
-                    Profile
-                  </NavLink>
-                </li>
-                <li className="border-b-2 border-zinc-500 px-4 pb-1">
-                  <NavLink
-                    onClick={() => setShowMenus(false)}
-                    to="/user/login"
-                    className={({ isActive }) =>
-                      `${
-                        isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                      } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
-                    }
-                  >
-                    Login
-                  </NavLink>
-                </li>
-                <li className="border-b-2 border-zinc-500 px-4 pb-1">
-                  <NavLink
-                    onClick={() => setShowMenus(false)}
-                    to="/user/register"
-                    className={({ isActive }) =>
-                      `${
-                        isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                      } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
-                    }
-                  >
-                    Register
-                  </NavLink>
-                </li>
+
+                {isLoggedIn ? (
+                  <>
+                    <li className="border-b-2 border-zinc-500 px-4 pb-1">
+                      <NavLink
+                        onClick={() => setShowMenus(false)}
+                        to={`/all-repositories`}
+                        className={({ isActive }) =>
+                          `${
+                            isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                          } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                        }
+                      >
+                        All Repositories
+                      </NavLink>
+                    </li>
+                    <li className="border-b-2 border-zinc-500 px-4 pb-1">
+                      <NavLink
+                        onClick={() => setShowMenus(false)}
+                        to={`/my-repositories`}
+                        className={({ isActive }) =>
+                          `${
+                            isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                          } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                        }
+                      >
+                        My Repositories
+                      </NavLink>
+                    </li>
+                    <li className="border-b-2 border-zinc-500 px-4 pb-1">
+                      <NavLink
+                        onClick={() => setShowMenus(false)}
+                        to={`/profile/${currentUser.username}`}
+                        className={({ isActive }) =>
+                          `${
+                            isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                          } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                        }
+                      >
+                        Profile
+                      </NavLink>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="border-b-2 border-zinc-500 px-4 pb-1">
+                      <NavLink
+                        onClick={() => setShowMenus(false)}
+                        to="/user/login"
+                        className={({ isActive }) =>
+                          `${
+                            isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                          } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                        }
+                      >
+                        Login
+                      </NavLink>
+                    </li>
+                    <li className="border-b-2 border-zinc-500 px-4 pb-1">
+                      <NavLink
+                        onClick={() => setShowMenus(false)}
+                        to="/user/register"
+                        className={({ isActive }) =>
+                          `${
+                            isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                          } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                        }
+                      >
+                        Register
+                      </NavLink>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           </div>
