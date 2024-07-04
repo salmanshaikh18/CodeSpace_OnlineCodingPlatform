@@ -126,7 +126,7 @@ const EditorHeader = () => {
     try {
       if (urlId) {
         await editCode({ fullCode, id: urlId }).unwrap();
-        toast.success("Code Updated Successully!");
+        toast.success("Code Updated Successully :)");
       }
     } catch (error) {
       handleError(error);
@@ -187,19 +187,22 @@ const EditorHeader = () => {
           />
         </button>
 
-        {isOwner && (
-          <button
-            onClick={handleEditCode}
-            className="px-4 py-2 flex justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
-          >
-            <FaRegEdit
-              id="icon"
-              className="text-lg transition-all ease-in-out duration-300"
-            />
-          </button>
+        {shareBtn && (
+          <>
+            {isOwner && (
+              <button
+                onClick={handleEditCode}
+                className="px-4 py-2 flex justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
+              >
+                <FaRegEdit
+                  id="icon"
+                  className="text-lg transition-all ease-in-out duration-300"
+                />
+              </button>
+            )}
+            <DialogShareButton />
+          </>
         )}
-
-        <DialogShareButton />
       </div>
 
       <div className="__tab_switcher flex justify-center items-center gap-1">

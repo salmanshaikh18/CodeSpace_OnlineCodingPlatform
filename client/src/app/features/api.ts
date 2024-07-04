@@ -63,7 +63,7 @@ export const api = createApi({
       }),
     }),
     getMyCodes: builder.query<Array<codeType>, void>({
-      query: () => "/user/my-repositories",
+      query: () => "/code-editor/my-repositories",
       providesTags: ["myRepositories"],
     }),
     deleteCode: builder.mutation<void, string>({
@@ -85,6 +85,16 @@ export const api = createApi({
         };
       },
     }),
+    getAllCodes: builder.query<
+      Array<{ _id: string; title: string; ownerName: string }>,
+      void
+    >({
+      query: () => ({
+        url: "/code-editor/all-repositories",
+        cache: "no-store",
+      }),
+      providesTags: ["allRepositories"],
+    }),
   }),
 });
 
@@ -98,4 +108,5 @@ export const {
   useGetMyCodesQuery,
   useEditCodeMutation,
   useDeleteCodeMutation,
+  useGetAllCodesQuery,
 } = api;

@@ -53,9 +53,11 @@ const CodeItem = ({
       </Link>
       <Dialog>
         <DialogTrigger asChild>
-          <button className="bg-red-800 hover:bg-red-900 transition-all ease-in-out duration-300 p-2 w-full rounded-md cursor-pointer">
-            Delete Code
-          </button>
+          {deleteBtn && (
+            <button className="bg-red-800 hover:bg-red-900 transition-all ease-in-out duration-300 p-2 w-full rounded-md cursor-pointer">
+              Delete Code
+            </button>
+          )}
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
