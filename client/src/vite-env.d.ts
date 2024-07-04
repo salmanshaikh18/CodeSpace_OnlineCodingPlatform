@@ -4,7 +4,7 @@ import { CodeEditorSliceStateType } from "./app/features/codeEditorSlice";
 
 //users types
 interface userInfoType {
-  message: string,
+  message: string;
   username: string;
   picture: string;
   email: string;
@@ -23,7 +23,7 @@ interface registerCredentialsType {
 }
 
 interface codeType {
-  fullCode?: CodeEditorSliceStateType ["fullCode"];
+  fullCode?: CodeEditorSliceStateType["fullCode"];
   title: string;
   _id?: string;
 }
@@ -31,4 +31,3 @@ interface codeType {
 interface logoutType {
   message: string;
 }
-

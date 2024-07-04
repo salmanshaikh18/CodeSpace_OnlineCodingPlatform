@@ -1,5 +1,6 @@
 import { useLogoutMutation } from "@/app/features/api";
 import { updateCurrentUser, updateIsLoggedIn } from "@/app/features/appSlice";
+import { updateIsOwner } from "@/app/features/codeEditorSlice";
 import { RootState } from "@/app/store";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ const Profile = () => {
       const response = await logout().unwrap();
       dispatch(updateIsLoggedIn(false));
       dispatch(updateCurrentUser({}));
+      dispatch(updateIsOwner(false))
       toast.success(response.message)
       navigate("/")
     } catch (error) {

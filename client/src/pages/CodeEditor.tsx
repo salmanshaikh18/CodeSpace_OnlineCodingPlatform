@@ -1,4 +1,4 @@
-import { updateFullCode } from "@/app/features/codeEditorSlice";
+import { updateFullCode, updateIsOwner } from "@/app/features/codeEditorSlice";
 import CodePreview from "@/components/CodePreview";
 // import Editor from "@/components/MonacoEditor";
 import EditorHeader from "@/components/EditorHeader";
@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import MonacoEditor from "@/components/MonacoEditor";
 import { useLoadCodeMutation } from "@/app/features/api";
-import Loader from "../components/Loader/Loader"
+import Loader from "../components/Loader/Loader";
 
 const CodeEditor = () => {
   const { urlId } = useParams();
@@ -24,6 +24,7 @@ const CodeEditor = () => {
       if (urlId) {
         const response = await loadExistingCode({ urlId }).unwrap();
         dispatch(updateFullCode(response.fullCode));
+        dispatch(updateIsOwner(response.isOwner));
       }
     } catch (error) {
       handleError(error);
@@ -36,11 +37,12 @@ const CodeEditor = () => {
     }
   }, [urlId]);
 
-  if (isLoading) return (
-    <>
-      <Loader />
-    </>
-  )
+  if (isLoading)
+    return (
+      <>
+        <Loader />
+      </>
+    );
   return (
     <div className="text-red-500 h-[calc(100vh-60px-50px)] w-full">
       <EditorHeader />

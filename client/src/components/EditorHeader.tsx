@@ -1,4 +1,4 @@
-import { FaCloud, FaCss3Alt, FaHtml5 } from "react-icons/fa";
+import { FaCloud, FaCss3Alt, FaHtml5, FaRegEdit } from "react-icons/fa";
 import {
   Select,
   SelectContent,
@@ -15,11 +15,11 @@ import {
 import { RootState } from "@/app/store";
 import { handleError } from "@/utils/handleError";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { RiLoader2Line, RiLoader4Line } from "react-icons/ri";
-import { DialogCloseButton } from "./CodeShareDialogueBtn";
-import { useSaveCodeMutation } from "@/app/features/api";
+import { DialogShareButton } from "./CodeShareDialogueBtn";
+import { useEditCodeMutation, useSaveCodeMutation } from "@/app/features/api";
 import { toast } from "react-toastify";
 import { MdDownload } from "react-icons/md";
 import "../styles/buttonHover.css";
@@ -33,9 +33,12 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Code } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const EditorHeader = () => {
+  const isOwner = useSelector(
+    (state: RootState) => state.codeEditorSlice.isOwner
+  );
   const [postTitle, setPostTitle] = useState("My Code");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,6 +50,7 @@ const EditorHeader = () => {
   );
 
   const [saveCode, { isLoading }] = useSaveCodeMutation();
+  const [editCode] = useEditCodeMutation();
   const handleSaveCode = async () => {
     const body = { fullCode: fullCode, title: postTitle };
     try {
@@ -107,6 +111,28 @@ const EditorHeader = () => {
     }
   };
 
+  const [shareBtn, setShareBtn] = useState(false);
+
+  const { urlId } = useParams();
+  useEffect(() => {
+    if (urlId) {
+      setShareBtn(true);
+    } else {
+      setShareBtn(false);
+    }
+  }, [urlId]);
+
+  const handleEditCode = async () => {
+    try {
+      if (urlId) {
+        await editCode({ fullCode, id: urlId }).unwrap();
+        toast.success("Code Updated Successully!");
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   return (
     <div className="sm:h-[50px] h-[100px] flex-wrap sm:flex-nowrap bg-zinc-900 text-white flex justify-between px-4 items-center">
       <div className="flex gap-2">
@@ -160,7 +186,20 @@ const EditorHeader = () => {
             className="text-lg transition-all ease-in-out duration-300"
           />
         </button>
-        <DialogCloseButton />
+
+        {isOwner && (
+          <button
+            onClick={handleEditCode}
+            className="px-4 py-2 flex justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
+          >
+            <FaRegEdit
+              id="icon"
+              className="text-lg transition-all ease-in-out duration-300"
+            />
+          </button>
+        )}
+
+        <DialogShareButton />
       </div>
 
       <div className="__tab_switcher flex justify-center items-center gap-1">

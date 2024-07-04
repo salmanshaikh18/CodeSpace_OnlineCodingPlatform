@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { IoShareSocial } from "react-icons/io5";
 import "../styles/buttonHover.css"
 
-export function DialogCloseButton() {
+export function DialogShareButton() {
   const [shareButton, setShareButton] = useState<boolean>(false);
   const { urlId } = useParams();
 

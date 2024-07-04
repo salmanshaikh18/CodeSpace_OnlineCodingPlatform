@@ -27,7 +27,7 @@ export const api = createApi({
       invalidatesTags: ["myRepositories"],
     }),
     loadCode: builder.mutation<
-      { fullCode: CodeEditorSliceStateType["fullCode"] },
+      { fullCode: CodeEditorSliceStateType["fullCode"]; isOwner: boolean },
       { urlId: string }
     >({
       query: (body) => ({
@@ -66,6 +66,25 @@ export const api = createApi({
       query: () => "/user/my-repositories",
       providesTags: ["myRepositories"],
     }),
+    deleteCode: builder.mutation<void, string>({
+      query: (_id) => ({
+        url: `/code-editor/delete/${_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["myRepositories", "allRepositories"],
+    }),
+    editCode: builder.mutation<
+      void,
+      { fullCode: CodeEditorSliceStateType["fullCode"]; id: string }
+    >({
+      query: ({ fullCode, id }) => {
+        return {
+          url: `/code-editor/edit/${id}`,
+          method: "PUT",
+          body: fullCode,
+        };
+      },
+    }),
   }),
 });
 
@@ -77,4 +96,6 @@ export const {
   useGetUserDetailsQuery,
   useRegisterMutation,
   useGetMyCodesQuery,
+  useEditCodeMutation,
+  useDeleteCodeMutation,
 } = api;

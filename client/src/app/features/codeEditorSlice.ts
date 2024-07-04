@@ -8,6 +8,7 @@ export interface CodeEditorSliceStateType {
   };
 
   currentLanguage: "html" | "css" | "javascript";
+  isOwner: boolean;
 }
 
 const initialState: CodeEditorSliceStateType = {
@@ -66,6 +67,7 @@ function showAlert() {
     `,
   },
   currentLanguage: "html",
+  isOwner: false,
 };
 
 export const codeEditorSlice = createSlice({
@@ -81,16 +83,23 @@ export const codeEditorSlice = createSlice({
     updateCodeValue: (state, action: PayloadAction<string>) => {
       state.fullCode[state.currentLanguage] = action.payload;
     },
+    updateIsOwner: (state, action: PayloadAction<boolean>) => {
+      state.isOwner = action.payload;
+    },
     updateFullCode: (
       state,
       action: PayloadAction<CodeEditorSliceStateType["fullCode"]>
     ) => {
-      state.fullCode = action.payload
+      state.fullCode = action.payload;
     },
   },
 });
 
 export default codeEditorSlice.reducer;
 
-export const { updateCurrentLanguage, updateCodeValue, updateFullCode } =
-  codeEditorSlice.actions;
+export const {
+  updateCurrentLanguage,
+  updateCodeValue,
+  updateFullCode,
+  updateIsOwner,
+} = codeEditorSlice.actions;
