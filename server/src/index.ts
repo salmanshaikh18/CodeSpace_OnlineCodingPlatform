@@ -5,6 +5,7 @@ import { dbConnect } from "./lib/dbConnect";
 import { codeEditorRouter } from "./routes/codeEditorRouter";
 import { userRouter } from "./routes/userRouter";
 import cookieParser from "cookie-parser"
+import { contactRouter } from "./routes/contactRouter";
 
 const app = express();
 config();
@@ -24,6 +25,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/code-editor", codeEditorRouter)
 app.use("/user", userRouter)
+app.use('/contact', contactRouter)
 
 // Database Connection
 dbConnect()

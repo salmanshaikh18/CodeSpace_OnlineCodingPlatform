@@ -2,8 +2,72 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { Button } from "./ui/button";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { toast } from "react-toastify";
+import { handleError } from "@/utils/handleError";
+import validator from "validator"
 
 const Footer = () => {
+  const [contact, setContact] = useState({
+    userName: "",
+    userEmail: "",
+    userMessage: "",
+  });
+
+  // handling the input values
+  const handleInput = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    let name = e.target.name; // Get the name attribute of the input element
+    let value = e.target.value; // Get the value entered into the input element
+
+    // Update the user state object with the new value for the corresponding input field
+    setContact({
+      ...contact, // Spread the existing user state to retain its other properties
+      [name]: value, // Dynamically set the property name based on the input field's name attribute, and set its value
+    });
+  };
+
+  const handleSendMsg = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const isValidEmail = (email: string) => {
+      return validator.isEmail(email);
+    };
+
+    try {
+      if (contact.userName && contact.userEmail && contact.userMessage) {
+        if (!isValidEmail(contact.userEmail)) {
+          toast.error("Please enter a valid email address.");
+          return;
+        }
+
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/contact/message`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(contact),
+        });
+
+        if (response.ok) {
+          setContact({
+            userName: "",
+            userEmail: "",
+            userMessage: "",
+          });
+          toast.success("Message Sent Successfully :)");
+        } else {
+          toast.error("Message Not Delivered!");
+        }
+      } else {
+        toast.error("All the fields are required to send a message!");
+      }
+    } catch (error) {
+      handleError(error)
+      console.log("Error while sending a message: ", error);
+    }
+  };
   return (
     <footer className="w-full">
       <div className="w-full flex flex-col md:flex-row py-10">
@@ -49,30 +113,30 @@ const Footer = () => {
             className="p-2 pl-4 md:w-[70%] w-[300px] rounded-md bg-[#171F38] border outline-none border-[#03CF86a]"
             type="text"
             name="userName"
-            // value={contact.userName}
-            // onChange={handleInput}
+            value={contact.userName}
+            onChange={handleInput}
             placeholder="Enter Your Name"
           />
           <input
             className="p-2 pl-4 md:w-[70%] w-[300px] border outline-none border-[#03CF86a] rounded-md bg-[#171F38]"
             type="email"
             name="userEmail"
-            // value={contact.userEmail}
-            // onChange={handleInput}
+            value={contact.userEmail}
+            onChange={handleInput}
             placeholder="Enter Your Email"
           />
           <textarea
             className="rounded-md p-2 border outline-none border-[#03CF86a] text-zinc-200 pl-4 max-h-60 min-h-[120px] md:w-[70%] w-[300px] bg-[#171F38]"
             name="userMessage"
-            // value={contact.userMessage}
-            // onChange={handleInput}
+            value={contact.userMessage}
+            onChange={handleInput}
             id=""
             placeholder="Enter Your Message"
           ></textarea>
           <Button
             className="md:w-[70%] w-[300px] bg-blue-800 transition-all ease-in-out duration-500 hover:bg-blue-900"
             variant={"secondary"}
-            // onClick={handleSendMsg}
+            onClick={handleSendMsg}
           >
             Send Message
           </Button>

@@ -28,7 +28,7 @@ const Header = () => {
         <img className="h-8 w-8" src={logo} alt="" />
         <span className="sp font-bold select-none">The CodeSpace</span>
       </NavLink>
-      <ul className="sm:flex hidden px-4 gap-4 justify-center items-center">
+      <ul className="sm:flex hidden justify-center items-center gap-4">
         <li>
           <NavLink
             to="/code-editor"
@@ -41,9 +41,6 @@ const Header = () => {
             CodeEditor
           </NavLink>
         </li>
-      </ul>
-
-      <ul className="sm:flex hidden justify-center items-center gap-4">
         {isLoggedIn ? (
           <>
             <li>
