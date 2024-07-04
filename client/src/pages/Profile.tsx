@@ -5,6 +5,7 @@ import { RootState } from "@/app/store";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { handleError } from "@/utils/handleError";
+import { RiLoader2Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -58,9 +59,10 @@ const Profile = () => {
                 // loading={isLoading}
                 onClick={handleLogout}
                 // className="mr-2 bg-slate-500 hover:bg-slate-500 font-semibold text-zinc-200"
-                className="font-medium text-[16px] w-[150px] bg-red-800 transition-all ease-in-out duration-500 sm:px-4 sm:py-5 px-2 py-1"
+                className="font-medium text-[16px] w-[150px] bg-red-800 transition-all ease-in-out duration-500 sm:px-4 sm:py-5 px-2 py-1 gap-2"
                 variant="destructive"
               >
+                {isLoading && <RiLoader2Line className="animate-spin" />}
                 Log Out
               </Button>
               <button

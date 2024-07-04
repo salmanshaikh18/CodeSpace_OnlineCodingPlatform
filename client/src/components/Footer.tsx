@@ -144,7 +144,7 @@ const Footer = () => {
       </div>
       <hr />
       <div className="md:h-[10vh] p-2 flex justify-center items-center">
-        <p className="text-zinc-400 text-center md:text-md text-[12px]">
+        <p className="text-zinc-400 text-center md:text-md sm:text-sm text-[12px]">
           &copy; Copyright 2024 - The CodeSpace (Coding platform). All rights
           reserved.
         </p>

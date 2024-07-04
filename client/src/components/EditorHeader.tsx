@@ -17,7 +17,7 @@ import { handleError } from "@/utils/handleError";
 
 import { useNavigate, useParams } from "react-router-dom";
 
-import { RiLoader2Line, RiLoader4Line } from "react-icons/ri";
+import { RiLoader2Line } from "react-icons/ri";
 import { DialogShareButton } from "./CodeShareDialogueBtn";
 import { useEditCodeMutation, useSaveCodeMutation } from "@/app/features/api";
 import { toast } from "react-toastify";
