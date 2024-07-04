@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CodeEditorSliceStateType } from "./codeEditorSlice";
 import {
+  codeType,
   loginCredentialsType,
   logoutType,
   registerCredentialsType,
@@ -12,6 +13,7 @@ export const api = createApi({
     baseUrl: import.meta.env.VITE_BACKEND_URI,
     credentials: "include",
   }),
+  tagTypes: ["myRepositories", "allRepositories"],
   endpoints: (builder) => ({
     saveCode: builder.mutation<
       { url: string; status: string },
@@ -22,6 +24,7 @@ export const api = createApi({
         method: "POST",
         body: fullCode,
       }),
+      invalidatesTags: ["myRepositories"],
     }),
     loadCode: builder.mutation<
       { fullCode: CodeEditorSliceStateType["fullCode"] },
@@ -59,6 +62,10 @@ export const api = createApi({
         cache: "no-store",
       }),
     }),
+    getMyCodes: builder.query<Array<codeType>, void>({
+      query: () => "/user/my-repositories",
+      providesTags: ["myRepositories"],
+    }),
   }),
 });
 
@@ -69,4 +76,5 @@ export const {
   useLogoutMutation,
   useGetUserDetailsQuery,
   useRegisterMutation,
+  useGetMyCodesQuery,
 } = api;

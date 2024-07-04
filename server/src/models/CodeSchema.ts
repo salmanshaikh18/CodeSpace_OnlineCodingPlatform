@@ -20,6 +20,6 @@ const CodeSchema = new mongoose.Schema<ICodeScema>({
   title: { type: String, required: true },
   ownerInfo: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   ownerName: String,
-});
+}, {timestamps: true});
 
 export const Code = mongoose.model("Code", CodeSchema);

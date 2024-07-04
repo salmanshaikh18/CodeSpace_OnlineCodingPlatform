@@ -60,7 +60,7 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                to={`${currentUser.username}/my-repositories`}
+                to={`user/my-repositories`}
                 className={({ isActive }) =>
                   `${
                     isActive ? "text-[#EA69C0]" : "text-[#956CE6]"

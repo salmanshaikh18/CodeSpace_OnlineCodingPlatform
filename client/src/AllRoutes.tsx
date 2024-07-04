@@ -39,7 +39,7 @@ const AllRoutes = () => {
           element={<ChangePassword />}
         />
         <Route path={`${currentUser.username}/all-repositories`} element={<AllRepositories />} />
-        <Route path={`${currentUser.username}/my-repositories`} element={<MyRepositories />} />
+        <Route path={`user/my-repositories`} element={<MyRepositories />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Suspense>

@@ -17,7 +17,7 @@ import { handleError } from "@/utils/handleError";
 
 import { useNavigate } from "react-router-dom";
 
-import { RiLoader4Line } from "react-icons/ri";
+import { RiLoader2Line, RiLoader4Line } from "react-icons/ri";
 import { DialogCloseButton } from "./CodeShareDialogueBtn";
 import { useSaveCodeMutation } from "@/app/features/api";
 import { toast } from "react-toastify";
@@ -48,7 +48,7 @@ const EditorHeader = () => {
 
   const [saveCode, { isLoading }] = useSaveCodeMutation();
   const handleSaveCode = async () => {
-    const body = {fullCode: fullCode, title: postTitle}
+    const body = { fullCode: fullCode, title: postTitle };
     try {
       const response = await saveCode(body).unwrap();
       console.log(response);
@@ -107,15 +107,12 @@ const EditorHeader = () => {
     }
   };
 
-  
   return (
     <div className="sm:h-[50px] h-[100px] flex-wrap sm:flex-nowrap bg-zinc-900 text-white flex justify-between px-4 items-center">
       <div className="flex gap-2">
         <Dialog>
           <DialogTrigger asChild>
-            <button
-              className="px-4 py-2 flex justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
-            >
+            <button className="px-4 py-2 flex justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300">
               <FaCloud
                 id="icon"
                 className="text-lg transition-all ease-in-out duration-300"
@@ -140,10 +137,14 @@ const EditorHeader = () => {
                   onClick={handleSaveCode}
                   className="px-4 py-2 gap-2 flex tex-sm justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#480785] transition-all ease-in-out duration-300"
                 >
-                  <FaCloud
-                    id="icon"
-                    className="text-lg transition-all ease-in-out duration-300"
-                  />
+                  {isLoading ? (
+                    <RiLoader2Line className="animate-spin" />
+                  ) : (
+                    <FaCloud
+                      id="icon"
+                      className="text-lg transition-all ease-in-out duration-300"
+                    />
+                  )}
                   Save
                 </Button>
               </div>
