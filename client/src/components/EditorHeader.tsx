@@ -21,6 +21,7 @@ import { RiLoader4Line } from "react-icons/ri";
 import { DialogCloseButton } from "./CodeShareDialogueBtn";
 import { useSaveCodeMutation } from "@/app/features/api";
 import { toast } from "react-toastify";
+import { MdDownload } from "react-icons/md";
 
 const EditorHeader = () => {
   const navigate = useNavigate();
@@ -43,6 +44,54 @@ const EditorHeader = () => {
       handleError(error);
     }
   };
+
+  const handleDownloadCode = () => {
+    if (
+      fullCode.html === "" &&
+      fullCode.css === "" &&
+      fullCode.javascript === ""
+    ) {
+      toast.error("Error: Code is Empty");
+    } else {
+      const htmlCode = new Blob([fullCode.html], { type: "text/html" });
+      const cssCode = new Blob([fullCode.css], { type: "text/css" });
+      const javascriptCode = new Blob([fullCode.javascript], {
+        type: "text/javascript",
+      });
+
+      const htmlLink = document.createElement("a");
+      const cssLink = document.createElement("a");
+      const javascriptLink = document.createElement("a");
+
+      htmlLink.href = URL.createObjectURL(htmlCode);
+      htmlLink.download = "index.html";
+      document.body.appendChild(htmlLink);
+
+      cssLink.href = URL.createObjectURL(cssCode);
+      cssLink.download = "style.css";
+      document.body.appendChild(cssLink);
+
+      javascriptLink.href = URL.createObjectURL(javascriptCode);
+      javascriptLink.download = "script.js";
+      document.body.appendChild(javascriptLink);
+
+      if (fullCode.html !== "") {
+        htmlLink.click();
+      }
+      if (fullCode.css !== "") {
+        cssLink.click();
+      }
+      if (fullCode.javascript !== "") {
+        javascriptLink.click();
+      }
+
+      document.body.removeChild(htmlLink);
+      document.body.removeChild(cssLink);
+      document.body.removeChild(javascriptLink);
+
+      toast.success("Code Downloaded Successfully!");
+    }
+  };
   return (
     <div className="sm:h-[50px] h-[100px] flex-wrap sm:flex-nowrap bg-zinc-900 text-white flex justify-between px-4 items-center">
       <div className="flex gap-4">
@@ -63,10 +112,10 @@ const EditorHeader = () => {
             </>
           )}
         </button>
-        {/* <button className="px-4 py-1 flex justify-center items-center gap-2 bg-green-600 rounded-md hover:bg-green-700 transition-all ease-in-out duration-300 hover:scale-105">
-          <FaShare />
-          Share
-        </button> */}
+        <button onClick={handleDownloadCode} className="px-4 py-1 flex justify-center items-center gap-2 bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300 hover:scale-105">
+          <MdDownload />
+          Download
+        </button>
         <DialogCloseButton />
       </div>
 
