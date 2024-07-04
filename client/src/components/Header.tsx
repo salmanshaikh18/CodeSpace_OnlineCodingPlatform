@@ -43,9 +43,33 @@ const Header = () => {
         </li>
       </ul>
 
-      <ul className="sm:flex hidden justify-center items-center gap-2">
+      <ul className="sm:flex hidden justify-center items-center gap-4">
         {isLoggedIn ? (
           <>
+           <li>
+              <NavLink
+                to={`${currentUser.username}/all-repositories`}
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                  } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                }
+              >
+                All Repositories
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={`${currentUser.username}/my-repositories`}
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                  } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                }
+              >
+                My Repositories
+              </NavLink>
+            </li>
             <li>
               <Link to={`/profile/${currentUser.username}`}>
                 <Avatar className="border-2 border-blue-500 transition-shadow ease-in-out duration-500 hover:border-green-500">
@@ -56,6 +80,7 @@ const Header = () => {
                 </Avatar>
               </Link>
             </li>
+           
           </>
         ) : (
           <>

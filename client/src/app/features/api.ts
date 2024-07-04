@@ -15,7 +15,7 @@ export const api = createApi({
   endpoints: (builder) => ({
     saveCode: builder.mutation<
       { url: string; status: string },
-      CodeEditorSliceStateType["fullCode"]
+      { fullCode: CodeEditorSliceStateType["fullCode"]; title: string }
     >({
       query: (fullCode) => ({
         url: "code-editor/save",

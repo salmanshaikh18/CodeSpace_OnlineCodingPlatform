@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FaShare } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { IoShareSocial } from "react-icons/io5";
+import "../styles/buttonHover.css"
 
 export function DialogCloseButton() {
   const [shareButton, setShareButton] = useState<boolean>(false);
@@ -32,14 +33,14 @@ export function DialogCloseButton() {
     window.navigator.clipboard.writeText(window.location.href);
     toast.success("URL copid to your clipboard :)", {});
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         {/* <Button variant="outline">Share</Button> */}
         {shareButton ? (
-          <button className="px-4 py-1 flex justify-center items-center gap-2 bg-blue-800 rounded-md hover:bg-blue-900 transition-all ease-in-out duration-300 hover:scale-105">
-            <FaShare />
-            Share
+          <button className="px-4 py-2 flex justify-center items-center gap-2 bg-blue-800 rounded-md hover:bg-blue-900 transition-all ease-in-out duration-300">
+            <IoShareSocial id="icon" className="text-lg transition-all ease-in-out duration-300" />
           </button>
         ) : null}
       </DialogTrigger>

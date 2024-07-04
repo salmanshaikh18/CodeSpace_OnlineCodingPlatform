@@ -10,6 +10,8 @@ const Login = lazy(() => import("./pages/Login"));
 const Profile = lazy(() => import("./pages/Profile"));
 const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 const ChangePassword = lazy(() => import("./pages/ChangePassword"));
+const AllRepositories = lazy(() => import("./pages/AllRepositories"))
+const MyRepositories = lazy(() => import("./pages/MyRepositories"))
 
 const AllRoutes = () => {
   const currentUser = useSelector(
@@ -36,6 +38,8 @@ const AllRoutes = () => {
           path={`/profile/${currentUser.username}/change-password`}
           element={<ChangePassword />}
         />
+        <Route path={`${currentUser.username}/all-repositories`} element={<AllRepositories />} />
+        <Route path={`${currentUser.username}/my-repositories`} element={<MyRepositories />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Suspense>

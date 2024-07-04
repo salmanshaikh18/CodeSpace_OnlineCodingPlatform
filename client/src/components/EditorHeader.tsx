@@ -22,8 +22,21 @@ import { DialogCloseButton } from "./CodeShareDialogueBtn";
 import { useSaveCodeMutation } from "@/app/features/api";
 import { toast } from "react-toastify";
 import { MdDownload } from "react-icons/md";
+import "../styles/buttonHover.css";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { Code } from "lucide-react";
+import { useState } from "react";
 
 const EditorHeader = () => {
+  const [postTitle, setPostTitle] = useState("My Code");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentLanguage = useSelector(
@@ -35,8 +48,9 @@ const EditorHeader = () => {
 
   const [saveCode, { isLoading }] = useSaveCodeMutation();
   const handleSaveCode = async () => {
+    const body = {fullCode: fullCode, title: postTitle}
     try {
-      const response = await saveCode(fullCode).unwrap();
+      const response = await saveCode(body).unwrap();
       console.log(response);
       navigate(`/code-editor/${response.url}`, { replace: true });
       toast.success("Code saved successfully :)");
@@ -92,29 +106,58 @@ const EditorHeader = () => {
       toast.success("Code Downloaded Successfully!");
     }
   };
+
+  
   return (
     <div className="sm:h-[50px] h-[100px] flex-wrap sm:flex-nowrap bg-zinc-900 text-white flex justify-between px-4 items-center">
-      <div className="flex gap-4">
+      <div className="flex gap-2">
+        <Dialog>
+          <DialogTrigger asChild>
+            <button
+              className="px-4 py-2 flex justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
+            >
+              <FaCloud
+                id="icon"
+                className="text-lg transition-all ease-in-out duration-300"
+              />
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="flex gap-2 mb-4 justify-center items-center">
+                <Code />
+                Save your Code!
+              </DialogTitle>
+              <div className="__url flex justify-center items-center gap-1">
+                <Input
+                  className="bg-slate-700 focus-visible:ring-0"
+                  placeholder="Type your Post title"
+                  value={postTitle}
+                  onChange={(e) => setPostTitle(e.target.value)}
+                />
+                <Button
+                  variant="outline"
+                  onClick={handleSaveCode}
+                  className="px-4 py-2 gap-2 flex tex-sm justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#480785] transition-all ease-in-out duration-300"
+                >
+                  <FaCloud
+                    id="icon"
+                    className="text-lg transition-all ease-in-out duration-300"
+                  />
+                  Save
+                </Button>
+              </div>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
         <button
-          onClick={handleSaveCode}
-          disabled={isLoading}
-          className="px-4 py-1 flex justify-center items-center gap-2 bg-green-600 rounded-md hover:bg-green-700 transition-all ease-in-out duration-300 hover:scale-105"
+          onClick={handleDownloadCode}
+          className="px-4 py-2 flex justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
         >
-          {isLoading ? (
-            <>
-              <RiLoader4Line className="animate-spin" />
-              Saving...
-            </>
-          ) : (
-            <>
-              <FaCloud />
-              Save
-            </>
-          )}
-        </button>
-        <button onClick={handleDownloadCode} className="px-4 py-1 flex justify-center items-center gap-2 bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300 hover:scale-105">
-          <MdDownload />
-          Download
+          <MdDownload
+            id="icon"
+            className="text-lg transition-all ease-in-out duration-300"
+          />
         </button>
         <DialogCloseButton />
       </div>
