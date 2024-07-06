@@ -10,8 +10,10 @@ const Login = lazy(() => import("./pages/Login"));
 const Profile = lazy(() => import("./pages/Profile"));
 const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 const ChangePassword = lazy(() => import("./pages/ChangePassword"));
-const AllRepositories = lazy(() => import("./pages/AllRepositories"))
-const MyRepositories = lazy(() => import("./pages/MyRepositories"))
+const AllRepositories = lazy(() => import("./pages/AllRepositories"));
+const MyRepositories = lazy(() => import("./pages/MyRepositories"));
+const CodePlaygroundHome = lazy(() => import("./pages/CodePlaygroundHome"));
+const CodePlayground = lazy(() => import("./pages/CodePlayground"));
 
 const AllRoutes = () => {
   const currentUser = useSelector(
@@ -40,6 +42,8 @@ const AllRoutes = () => {
         />
         <Route path={`/all-repositories`} element={<AllRepositories />} />
         <Route path={`/my-repositories`} element={<MyRepositories />} />
+        <Route path={`/code-playground`} element={<CodePlaygroundHome />} />
+        <Route path={`/code-playground/editor`} element={<CodePlayground />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Suspense>

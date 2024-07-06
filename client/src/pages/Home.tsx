@@ -23,10 +23,10 @@ const Home = () => {
           id="right"
           className="sm:w-[55%] w-full h-full flex flex-col px-1 justify-center items-center gap-1"
         >
-          <h1 className="sp text-[45px] sm:text-[6.2vw] rounded-lg px-2 sm:px-0 font-bold sm:font-semibold">
+          <h1 className="sp text-[40px] sm:text-[6.2vw] rounded-lg px-2 sm:px-0 font-bold sm:font-semibold">
             The CodeSpace
           </h1>
-          <div className="sp sm:text-[3.5vw] text-3xl h-10 sm:h-20 my-4 sm:my-4 sm:mt-10">
+          <div className="sp sm:text-[3.5vw] text-xl h-10 sm:h-20 my-4 sm:my-4 sm:mt-10">
             <Typewriter
               words={["Hello", "Welcome to my site", "Enjoy your stay!"]}
               loop={0} // number of times to loop through the words it its set to 0 then it will be infinite

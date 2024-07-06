@@ -1,9 +1,18 @@
 import { useGetMyCodesQuery } from "@/app/features/api";
+import { RootState } from "@/app/store";
 import CodeItem from "@/components/CodeItem";
+import PleaseLogin from "@/components/PleaseLogin";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function MyRepositories() {
   const { data: myRepositories } = useGetMyCodesQuery();
+
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.appSlice.isLoggedIn
+  );
+
+  if (!isLoggedIn) return <PleaseLogin feature={"MyRepositories"} />;
 
   return myRepositories?.length !== 0 ? (
     <div className="p-3 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">

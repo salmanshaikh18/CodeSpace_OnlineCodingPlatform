@@ -59,10 +59,10 @@ export default function Signup() {
       <div className="__formContainer absolute sm:left-[120px] sm:min-w-[350px] shadow-[0_0_15px_gray] p-8 rounded-lg bg-transparent">
         {" "}
         <div className="mb-6 flex justify-center flex-col items-center">
-          <h1 className="text-center text-4xl text-blue-700 font-semibold">
-            Signup
+          <h1 className="text-center text-4xl text-green-500 font-bold">
+            Register
           </h1>
-          <p className="text-blue-800 text-lg">
+          <p className="text-zinc-400 text-lg">
             &nbsp; &nbsp;&nbsp; Welcome to The CodeSpace &nbsp; &nbsp;&nbsp;
           </p>
         </div>

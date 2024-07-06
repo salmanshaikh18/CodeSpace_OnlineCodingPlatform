@@ -35,19 +35,15 @@ app.use("/contact", contactRouter);
 
 // ------------- For Deployment -----------------------
 
-app.use(express.static("client"));
-app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "../client", "index.html"));
-});
+// Serve static files from the "client/dist" directory
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
-app.get("/", (req, res) => {
-  app.use(express.static(path.resolve(__dirname, "../client", "index.html")));
-  res.sendFile(path.resolve(__dirname, "client", "index.html"));
+// Render client for any path
+app.get("*", (req: express.Request, res: express.Response) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
 // ------------------------------------------------------
-
-
 
 // Database Connection
 dbConnect();

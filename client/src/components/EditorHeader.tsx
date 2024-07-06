@@ -179,7 +179,7 @@ const EditorHeader = () => {
         </Dialog>
         <button
           onClick={handleDownloadCode}
-          className="px-4 py-2 flex justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
+          className="px-4 py-2 flex justify-center items-center bg-[#0e9c55] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
         >
           <MdDownload
             id="icon"
@@ -192,7 +192,7 @@ const EditorHeader = () => {
             {isOwner && (
               <button
                 onClick={handleEditCode}
-                className="px-4 py-2 flex justify-center items-center bg-[#6a18b6] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
+                className="px-4 py-2 flex justify-center items-center bg-[#8d0e78] rounded-md hover:bg-[#5f09af] transition-all ease-in-out duration-300"
               >
                 <FaRegEdit
                   id="icon"

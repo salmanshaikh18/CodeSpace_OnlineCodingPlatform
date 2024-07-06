@@ -54,10 +54,10 @@ export default function Login() {
       <div className="__formContainer shadow-[0_0_15px_gray] absolute sm:left-[120px] sm:min-w-[350px] p-8 rounded-lg bg-transparent">
         {" "}
         <div className="mb-6 flex justify-center flex-col items-center">
-          <h1 className="text-center text-4xl text-blue-700 font-semibold">
+          <h1 className="text-center text-4xl text-green-500 font-bold">
             Login
           </h1>
-          <p className="text-blue-800 text-lg">Welcome back to The CodeSpace</p>
+          <p className="text-slate-400 text-lg">Welcome back to The CodeSpace</p>
         </div>
         <Form {...form}>
           <form

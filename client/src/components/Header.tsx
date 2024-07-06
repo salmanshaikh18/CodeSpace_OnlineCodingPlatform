@@ -28,7 +28,7 @@ const Header = () => {
         <img className="h-8 w-8" src={logo} alt="" />
         <span className="sp font-bold select-none">The CodeSpace</span>
       </NavLink>
-      <ul className="sm:flex hidden justify-center items-center gap-4">
+      <ul className="lg:flex hidden justify-center items-center gap-4">
         <li>
           <NavLink
             to="/code-editor"
@@ -41,32 +41,44 @@ const Header = () => {
             CodeEditor
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            to="/code-playground"
+            className={({ isActive }) =>
+              `${
+                isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+              } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+            }
+          >
+            CodePlayground
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to={`/all-repositories`}
+            className={({ isActive }) =>
+              `${
+                isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+              } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+            }
+          >
+            AllRepositories
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to={`/my-repositories`}
+            className={({ isActive }) =>
+              `${
+                isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+              } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+            }
+          >
+            MyRepositories
+          </NavLink>
+        </li>
         {isLoggedIn ? (
           <>
-            <li>
-              <NavLink
-                to={`/all-repositories`}
-                className={({ isActive }) =>
-                  `${
-                    isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                  } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
-                }
-              >
-                All Repositories
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={`/my-repositories`}
-                className={({ isActive }) =>
-                  `${
-                    isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                  } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
-                }
-              >
-                My Repositories
-              </NavLink>
-            </li>
             <li>
               <Link to={`/profile/${currentUser.username}`}>
                 <Avatar className="border-2 border-blue-500 transition-shadow ease-in-out duration-500 hover:border-green-500">
@@ -79,7 +91,7 @@ const Header = () => {
             </li>
           </>
         ) : (
-          <>
+          <ul className="flex justify-center items-center gap-2">
             <li>
               <NavLink
                 to="/user/login"
@@ -104,10 +116,10 @@ const Header = () => {
                 Register
               </NavLink>
             </li>
-          </>
+          </ul>
         )}
       </ul>
-      <div className="only-on-phone sm:hidden gap-2 flex justify-center items-center text-2xl ">
+      <div className="only-on-phone lg:hidden gap-2 flex justify-center items-center text-2xl ">
         {!showMenus ? (
           <IoMenu
             className="z-20 cursor-pointer"
@@ -122,7 +134,7 @@ const Header = () => {
               />
             </div>
 
-            <div className="mt-[120px] p-4 justify-center items-center flex-col gap-4">
+            <div className="mt-[80px] p-4 justify-center items-center flex-col gap-4">
               <ul className="flex flex-col gap-8 justify-center items-center">
                 <li className="border-b-2 border-zinc-500 px-4 pb-1">
                   <NavLink
@@ -151,34 +163,48 @@ const Header = () => {
                   </NavLink>
                 </li>
 
+                <li className="border-b-2 border-zinc-500 px-4 pb-1">
+                  <NavLink
+                    onClick={() => setShowMenus(false)}
+                    to="/code-playground"
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                      } font-medium transition-all ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                    }
+                  >
+                    CodePlayground
+                  </NavLink>
+                </li>
+                <li className="border-b-2 border-zinc-500 px-4 pb-1">
+                  <NavLink
+                    onClick={() => setShowMenus(false)}
+                    to={`/all-repositories`}
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                      } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                    }
+                  >
+                    All Repositories
+                  </NavLink>
+                </li>
+                <li className="border-b-2 border-zinc-500 px-4 pb-1">
+                  <NavLink
+                    onClick={() => setShowMenus(false)}
+                    to={`/my-repositories`}
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
+                      } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
+                    }
+                  >
+                    My Repositories
+                  </NavLink>
+                </li>
+
                 {isLoggedIn ? (
                   <>
-                    <li className="border-b-2 border-zinc-500 px-4 pb-1">
-                      <NavLink
-                        onClick={() => setShowMenus(false)}
-                        to={`/all-repositories`}
-                        className={({ isActive }) =>
-                          `${
-                            isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                          } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
-                        }
-                      >
-                        All Repositories
-                      </NavLink>
-                    </li>
-                    <li className="border-b-2 border-zinc-500 px-4 pb-1">
-                      <NavLink
-                        onClick={() => setShowMenus(false)}
-                        to={`/my-repositories`}
-                        className={({ isActive }) =>
-                          `${
-                            isActive ? "text-[#EA69C0]" : "text-[#956CE6]"
-                          } font-medium translate-x-full ease-in-out duration-300 hover:text-[#EA69C0] hover:scale-105`
-                        }
-                      >
-                        My Repositories
-                      </NavLink>
-                    </li>
                     <li className="border-b-2 border-zinc-500 px-4 pb-1">
                       <NavLink
                         onClick={() => setShowMenus(false)}
