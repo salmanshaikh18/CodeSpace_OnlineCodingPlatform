@@ -12,7 +12,7 @@ const CodePlayground = () => {
     <>
       {isLoggedIn ? (
         <div className="h-[calc(100vh-60xp)]">
-          <div className="h-[90%] text-gray-500 px-6 py-8">
+          <div className="h-[90%] text-gray-500 px-4 md:px-6 py-8">
             <CodeEditor />
           </div>
         </div>

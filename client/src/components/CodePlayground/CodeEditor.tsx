@@ -46,9 +46,9 @@ const CodeEditor: React.FC = () => {
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col md:flex-row gap-4">
       {/* <HStack spacing={4}> */}
-        <div className="w-[60vw]">
+        <div className="w-full md:w-[60vw]">
           <LanguageSelector language={language} onSelect={onSelect} />
           <Editor
             options={{

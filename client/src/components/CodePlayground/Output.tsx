@@ -44,7 +44,7 @@ const Output: React.FC<OutputProps> = ({ editorRef, language }) => {
   };
 
   return (
-    <div className="w-[40vw]">
+    <div className="w-full md:w-[40vw]">
      <div className="flex gap-2 justify-start mb-4 items-center">
      <h1 className="text-lg font-medium text-zinc-400">
         Output:
@@ -60,7 +60,7 @@ const Output: React.FC<OutputProps> = ({ editorRef, language }) => {
       </Button>
      </div>
       <div
-        className="overflow-auto p-4 border-[1px] h-[70vh] border-zinc-200 rounded-md"
+        className="md:overflow-auto p-4 border-[1px] h-[70vh] border-zinc-200 rounded-md"
         // color={isError ? "red.400" : ""}
         // borderColor={isError ? "red.500" : "#333"}
       >
