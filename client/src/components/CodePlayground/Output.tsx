@@ -60,7 +60,7 @@ const Output: React.FC<OutputProps> = ({ editorRef, language }) => {
       </Button>
      </div>
       <div
-        className="md:overflow-auto p-4 border-[1px] h-[70vh] border-zinc-200 rounded-md"
+        className="overflow-auto p-4 border-[1px] h-[70vh] border-zinc-200 rounded-md"
         // color={isError ? "red.400" : ""}
         // borderColor={isError ? "red.500" : "#333"}
       >

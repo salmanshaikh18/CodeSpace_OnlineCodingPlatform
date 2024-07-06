@@ -44,12 +44,6 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onSelect }) => {
               <p>JavaScript</p>
             </div>
           </SelectItem>
-          <SelectItem className="cursor-pointer" value="typescript">
-            <div className="flex justify-center items-center font-medium gap-2">
-              <SiTypescript className="text-[#F4C60F]" />
-              <p>TypeScript</p>
-            </div>
-          </SelectItem>
           <SelectItem className="cursor-pointer" value="python">
             <div className="flex justify-center font-medium items-center gap-2">
               <FaPython className="text-[#3672A4] text-lg" />
